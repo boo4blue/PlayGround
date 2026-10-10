@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wildcraft — Build with Sticks, Stones & Mud</title>
+<meta name="description" content="Step-by-step wilderness building guides with pictures: shelters, fireplaces, furnaces, tools and camp craft from wild materials.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪵</text></svg>">
+<style>
+:root{
+  --bg:#0e1511; --bg2:#16211a; --card:#1c2b22; --card2:#223629;
+  --ink:#eef5ec; --muted:#a8bfae; --line:rgba(255,255,255,.1);
+  --green:#7bc47f; --moss:#4c9a52; --amber:#f2b544; --clay:#e2725b; --stone:#9fb3c8;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#1e3a26 0%,transparent 60%),radial-gradient(900px 500px at 10% 0%,#2a2a18 0%,transparent 55%),var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header */
+header.top{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(14,21,17,.82);border-bottom:1px solid var(--line)}
+.top-inner{display:flex;align-items:center;gap:14px;padding:12px 0}
+.logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#2f5d34,#79b473);box-shadow:0 4px 18px rgba(0,0,0,.4)}
+.brand b{display:block;font-size:17px;letter-spacing:.2px}
+.brand span{font-size:12px;color:var(--muted)}
+nav.links{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+nav.links a{text-decoration:none;font-size:13px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+nav.links a:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+/* hero */
+.hero{padding:56px 0 24px;text-align:left;display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:34px}}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(242,181,68,.35);padding:6px 12px;border-radius:999px;background:rgba(242,181,68,.08)}
+.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.02;margin:16px 0 12px;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--green),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{color:var(--muted);font-size:17px;max-width:56ch;margin:0 0 20px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;font-weight:700;font-size:15px}
+.btn.primary{background:linear-gradient(135deg,#63b267,#2f7a38);color:#06120a}
+.btn.ghost{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line)}
+.stats{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.stats b{color:var(--ink);font-size:18px;display:block}
+.hero-card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:20px;padding:20px}
+.hero-card h3{margin:4px 0 10px;font-size:15px}
+.mat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;cursor:pointer;transition:.15s;user-select:none}
+.mat:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.25)}
+.mat.active{outline:2px solid var(--amber);background:#2a2417}
+.mat .e{font-size:26px;display:block}
+.mat small{color:var(--muted);font-size:12px}
+/* toolbar */
+.toolbar{position:sticky;top:67px;z-index:40;background:rgba(14,21,17,.9);backdrop-filter:blur(10px);padding:12px 0;border-bottom:1px solid var(--line)}
+.toolbar-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.search input{background:transparent;border:0;outline:0;color:var(--ink);width:100%;font-size:15px}
+select{background:#1a271f;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);border-radius:999px;padding:7px 13px;font-size:13px;cursor:pointer}
+.chip.active{background:var(--ink);color:#0e1511;border-color:var(--ink);font-weight:700}
+/* cards */
+.section-title{display:flex;align-items:end;justify-content:space-between;margin:30px 0 14px;gap:12px}
+.section-title h2{margin:0;font-size:22px}
+.section-title p{margin:0;color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--card),#182620);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:.16s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);border-color:rgba(123,196,127,.5);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.card-art{position:relative;line-height:0;background:#101b14}
+.card-art svg{width:100%;height:auto;display:block}
+.card-badge{position:absolute;left:12px;bottom:12px;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:30px;background:rgba(10,16,12,.78);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(4px);line-height:1}
+.card-step-n{position:absolute;right:12px;bottom:12px;font-size:12px;background:rgba(10,16,12,.78);border:1px solid rgba(255,255,255,.25);padding:4px 10px;border-radius:999px;color:#fff;line-height:1.4}
+.card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-body h3{margin:0;font-size:17px}
+.card-body p{margin:0;color:var(--muted);font-size:13.5px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.tag{font-size:11.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.04)}
+.tag.diff-easy{color:#9fe6a5;border-color:rgba(123,196,127,.4)}
+.tag.diff-medium{color:var(--amber);border-color:rgba(242,181,68,.4)}
+.tag.diff-hard{color:#ff9d8a;border-color:rgba(226,114,91,.45)}
+.card-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:8px;color:var(--muted);font-size:13px}
+.open{font-weight:700;color:var(--green)}
+/* finder */
+.finder{background:linear-gradient(180deg,#202b1c,#182420);border:1px solid rgba(242,181,68,.3);border-radius:20px;padding:22px;margin-top:34px}
+.finder h2{margin:0 0 6px}
+.finder p{color:var(--muted);margin:0 0 14px;font-size:14px}
+.have{display:flex;gap:8px;flex-wrap:wrap}
+.have button{border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);border-radius:12px;padding:10px 14px;font-size:14px;cursor:pointer}
+.have button.on{background:var(--amber);color:#231600;border-color:var(--amber);font-weight:800}
+#finderResults{margin-top:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:700px){#finderResults{grid-template-columns:1fr}}
+.f-result{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px}
+.f-result b{display:block}
+.f-result span{color:var(--muted);font-size:13px}
+/* resource map */
+.rmap{background:linear-gradient(180deg,#1c2b22,#14201a);border:1px solid rgba(123,196,127,.3);border-radius:20px;padding:22px;margin-top:34px}
+.rmap h2{margin:0 0 6px}
+.rmap>p{color:var(--muted);margin:0 0 14px;font-size:14px}
+.map-flex{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start}
+@media(max-width:860px){.map-flex{grid-template-columns:1fr}}
+.map-svg{background:#0d1712;border:1px solid var(--line);border-radius:16px;overflow:hidden;line-height:0}
+.map-svg svg{width:100%;height:auto;display:block}
+.mk{cursor:pointer}
+.mk:hover circle{stroke:#fff}
+.map-detail{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:16px;padding:16px;font-size:14px}
+.map-detail h3{margin:0 0 4px;font-size:19px}
+.map-detail .latin{color:var(--muted);font-size:13px;margin-bottom:8px}
+.map-detail dl{margin:10px 0;display:grid;gap:8px}
+.map-detail dt{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--amber);font-weight:800}
+.map-detail dd{margin:0;color:#d9e6dc}
+.map-builds{margin-top:10px}
+.map-detail .btn{margin-top:12px;width:100%;justify-content:center}
+.map-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.map-legend button{border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer}
+.map-legend button.on{background:var(--green);color:#06120a;border-color:var(--green);font-weight:800}
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:24px;overflow:auto}
+.overlay.show{display:flex}
+.sheet{background:#141f18;border:1px solid var(--line);border-radius:20px;max-width:760px;width:100%;overflow:hidden}
+.hero-img{line-height:0;position:relative;background:#0d1712}
+.hero-img svg{width:100%;height:auto;display:block}
+.hero-img .cap{position:absolute;left:14px;bottom:12px;font-size:12.5px;color:#fff;background:rgba(0,0,0,.55);padding:5px 12px;border-radius:999px;line-height:1.5}
+.sheet-head{padding:22px 26px 0;display:flex;gap:16px;align-items:flex-start}
+.sheet-art{font-size:48px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;width:84px;height:84px;display:grid;place-items:center;flex-shrink:0}
+.sheet-head h2{margin:0;font-size:26px}
+.sheet-head .sub{color:var(--muted);font-size:14px;margin-top:4px}
+.x{margin-left:auto;background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink);border-radius:10px;width:36px;height:36px;cursor:pointer;font-size:18px;flex-shrink:0}
+.sheet-body{padding:18px 26px 26px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:640px){.cols{grid-template-columns:1fr}}
+.box{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px}
+.box h4{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--amber)}
+.box ul{margin:0;padding-left:18px;font-size:14.5px;color:#d9e6dc}
+.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.step{display:flex;gap:12px;align-items:flex-start;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:14px;padding:10px;overflow:hidden}
+.step-pic{width:76px;height:76px;border-radius:12px;display:grid;place-items:center;font-size:38px;flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.14)}
+.step-num{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--amber);text-transform:uppercase}
+.step p{margin:2px 0 0;font-size:14.5px;color:#d9e6dc}
+.safety{border-left:3px solid var(--clay);background:rgba(226,114,91,.08);padding:12px 14px;border-radius:0 12px 12px 0;font-size:14px;margin-top:12px}
+.checkline{display:flex;gap:8px;align-items:center;margin-top:14px}
+.checkline button{flex:1}
+/* checklist */
+.check{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin:34px 0;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.check{grid-template-columns:1fr}}
+.check h2{margin:0 0 6px}
+.check p{color:var(--muted);font-size:14px;margin:0 0 12px}
+.todo{display:flex;flex-direction:column;gap:8px}
+.todo label{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:10px 12px;border-radius:12px;font-size:14px;cursor:pointer}
+.todo input{margin-top:4px;accent-color:var(--moss);width:16px;height:16px}
+.progress{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:12px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--moss),var(--green));width:0%}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:26px 0 60px;color:var(--muted);font-size:13px}
+footer b{color:var(--ink)}
+.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;grid-column:1/-1}
+.kbd{font-size:12px;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;color:var(--muted)}
+@media print{.top,.toolbar,.finder,.check,footer,.checkline{display:none}.overlay{position:static;display:block;padding:0}.sheet{max-width:100%}}
+</style>
+</head>
+<body>
+<!-- shared SVG gradients for all illustrations -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="skDay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd3e8"/><stop offset="1" stop-color="#dcefd8"/></linearGradient>
+<linearGradient id="skDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c3a63"/><stop offset=".6" stop-color="#a05a6e"/><stop offset="1" stop-color="#f2b544"/></linearGradient>
+<linearGradient id="skNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1026"/><stop offset="1" stop-color="#23304f"/></linearGradient>
+<linearGradient id="gnd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a5d3a"/><stop offset="1" stop-color="#2a3624"/></linearGradient>
+<linearGradient id="gndDry" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a6f4d"/><stop offset="1" stop-color="#5d4a30"/></linearGradient>
+<linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e2482e"/><stop offset=".55" stop-color="#f2b544"/><stop offset="1" stop-color="#ffe98a"/></linearGradient>
+<linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cc7e8"/><stop offset="1" stop-color="#2f7fa8"/></linearGradient>
+<linearGradient id="mudG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9744f"/><stop offset="1" stop-color="#6e4a2e"/></linearGradient>
+<linearGradient id="stoneG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c3cfdb"/><stop offset="1" stop-color="#7d8fa1"/></linearGradient>
+</defs></svg>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <div class="logo">🪵</div>
+    <div class="brand"><b>Wildcraft</b><span>sticks · stones · mud · & more</span></div>
+    <nav class="links">
+      <a href="#guides">Guides</a>
+      <a href="#map">Resource map</a>
+      <a href="#finder">What can I build?</a>
+      <a href="#kit">Pack list</a>
+      <a href="#safety">Safety</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <span class="kicker">🌲 Bushcraft · Survival · Backyard fun</span>
+      <h1>Build amazing things with <em>sticks, stones & mud.</em></h1>
+      <p class="sub">34 step-by-step wilderness projects with pictures — shelters, fireplaces, furnaces, forges, real metalworking, Dr. Stone-style science, water, tools, containers and camp craft. Every guide shows what the finished build looks like plus a picture for each building step. No store needed.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#guides">🔨 Browse builds</a>
+        <a class="btn ghost" href="#finder">🎒 I have… (material finder)</a>
+      </div>
+      <div class="stats">
+        <div><b>34</b> illustrated guides</div>
+        <div><b>15</b> fire, furnaces & forges</div>
+        <div><b>8</b> wild materials</div>
+        <div><b>100%</b> offline pictures*</div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>🌿 Tap what you found outside — we'll filter the guides:</h3>
+      <div class="mat-grid" id="heroMats"></div>
+      <p style="color:var(--muted);font-size:12.5px;margin:12px 0 0">*All pictures are hand-drawn built-in illustrations, so they work offline. <a href="#safety" style="color:var(--amber)">Read safety first.</a></p>
+    </div>
+  </section>
+
+  <div class="toolbar" id="guides">
+    <div class="wrap" style="padding:0">
+      <div class="toolbar-row">
+        <label class="search">🔍 <input id="q" type="search" placeholder="Search builds… try 'furnace', 'oven', 'dakota'" autocomplete="off"></label>
+        <select id="cat" aria-label="Category">
+          <option value="">All categories</option>
+        </select>
+        <select id="diff" aria-label="Difficulty">
+          <option value="">Any difficulty</option>
+          <option>Easy</option>
+          <option>Medium</option>
+          <option>Hard</option>
+        </select>
+      </div>
+      <div class="chips" id="matChips"></div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h2 id="countTitle">All builds</h2>
+    <p>Tap a card for pictures + steps <span class="kbd">↵</span></p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <section class="finder" id="finder">
+    <h2>🎒 "What can I build with what I have?"</h2>
+    <p>Toggle the materials in your pocket / campsite. We rank every project by how many of its materials you already have.</p>
+    <div class="have" id="have"></div>
+    <div id="finderResults"></div>
+  </section>
+
+  <section class="rmap" id="map">
+    <h2>🗺️ Wild resource map — where to find clay, sand & more</h2>
+    <p>Clay hides in river cutbanks, iron sand streaks the inside of bends, resin beads on wounded pines. Tap a numbered marker on the landscape to learn what each resource looks like, where to search, how to test it — and which builds use it.</p>
+    <div class="map-flex">
+      <div class="map-svg" id="mapSvg"></div>
+      <div class="map-detail" id="mapDetail"></div>
+    </div>
+    <div class="map-legend" id="mapLegend"></div>
+  </section>
+
+  <section class="check" id="kit">
+    <div>
+      <h2>🎒 Minimal wild kit checklist</h2>
+      <p>Tick things off as you gather them. Saved in your browser automatically.</p>
+      <div class="todo" id="todo"></div>
+      <div class="progress"><i id="bar"></i></div>
+      <p id="pct" style="margin-top:8px"></p>
+    </div>
+    <div id="safety">
+      <h2>⚠️ Wild safety — read this</h2>
+      <div class="box">
+        <ul style="margin:0;padding-left:18px;font-size:14px;color:#d9e6dc">
+          <li><b>Leave No Trace:</b> only use dead, fallen wood. Never cut living trees in parks.</li>
+          <li><b>Fires & furnaces:</b> check local rules first. Clear 3 m to bare soil, keep flames knee-high, never leave unattended, drown + stir + feel cold.</li>
+          <li><b>Water:</b> always filter <i>and</i> boil wild water 1 full minute (3 min above 2,000 m).</li>
+          <li><b>Stones:</b> never use wet river rocks in fire — trapped steam can make them explode. Use dry granite/sandstone.</li>
+          <li><b>Kilns & smelting:</b> extreme heat + fumes. Only with an experienced adult, outdoors, upwind, with water and a burn kit nearby.</li>
+          <li><b>Traps & spears:</b> many places restrict them. Practice the skill, don't rely on it; check fishing/hunting laws.</li>
+          <li><b>Mud/clay:</b> don't eat or drink from untested clay; wash hands; avoid soil near roads or old mines (lead).</li>
+          <li><b>Weather:</b> shelter first — 3 hours exposed, 3 days without water, 3 weeks without food.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <b>🌲 Wildcraft</b> — a friendly field guide to sticks, stones, mud, bark, leaves, vines, sand & water.<br>
+    All artwork is original built-in illustration (no downloads needed). Practice in your backyard or with a local bushcraft group first. Respect nature, wildlife and local laws.
+  </footer>
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true">
+  <div class="sheet">
+    <div class="hero-img" id="mHero"></div>
+    <div class="sheet-head">
+      <div class="sheet-art" id="mArt">🛖</div>
+      <div><h2 id="mTitle"></h2><div class="sub" id="mSub"></div><div class="meta" id="mTags" style="margin-top:8px"></div></div>
+      <button class="x" id="close" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="cols">
+        <div class="box"><h4>🧺 Gather</h4><ul id="mMats"></ul></div>
+        <div class="box"><h4>📊 At a glance</h4><div id="mFacts" style="font-size:14px"></div></div>
+      </div>
+      <div class="box"><h4>🔨 How to build it — picture for every step</h4><ol class="steps" id="mSteps"></ol></div>
+      <div class="safety" id="mSafety"></div>
+      <div class="checkline">
+        <button class="btn primary" id="doneBtn">✅ Mark as built</button>
+        <button class="btn ghost" id="printBtn">🖨️ Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const MATERIALS = [
+  {id:"sticks", e:"🪵", label:"Sticks"},
+  {id:"stones", e:"🪨", label:"Stones"},
+  {id:"mud", e:"🟤", label:"Mud / clay"},
+  {id:"leaves", e:"🍂", label:"Leaves"},
+  {id:"bark", e:"🪶", label:"Bark"},
+  {id:"vine", e:"🌿", label:"Vines / roots"},
+  {id:"sand", e:"⏳", label:"Sand"},
+  {id:"water", e:"💧", label:"Water"},
+];
+const CATS = ["Shelter","Fire","Furnaces","Science","Water","Food","Tools","Containers","Camp craft"];
+
+/* ---------- built-in picture library: every build gets a scene illustration ---------- */
+function sceneSVG(scene){
+  const open = `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img">`;
+  const trees = `<g opacity=".9"><rect x="18" y="96" width="10" height="64" fill="#4a3524"/><polygon points="23,40 2,100 44,100" fill="#2f6b34"/><rect x="366" y="100" width="10" height="60" fill="#4a3524"/><polygon points="371,46 350,104 392,104" fill="#356b38"/></g>`;
+  const stars = `<g fill="#fff"><circle cx="40" cy="24" r="1.6"/><circle cx="110" cy="40" r="1.2"/><circle cx="200" cy="18" r="1.6"/><circle cx="290" cy="34" r="1.2"/><circle cx="350" cy="20" r="1.8"/><circle cx="250" cy="55" r="1.1"/><circle cx="70" cy="60" r="1.1"/></g>`;
+  const moon = `<circle cx="345" cy="38" r="16" fill="#f4ead0"/><circle cx="339" cy="33" r="13" fill="#0b1026" opacity=".25"/>`;
+  const flame = (x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})"><path d="M0,-46 C14,-28 20,-16 20,-4 C20,10 10,18 0,18 C-10,18 -20,10 -20,-4 C-20,-14 -14,-22 -10,-30 C-8,-22 -6,-20 -4,-18 C-6,-28 -4,-38 0,-46 Z" fill="url(#flame)"/><ellipse cx="0" cy="14" rx="16" ry="5" fill="#ff9d3c" opacity=".7"/></g>`;
+  const S = {
+    shelter:`<rect width="400" height="160" fill="url(#skDay)"/>${trees}<rect y="160" width="400" height="60" fill="url(#gnd)"/><g><rect x="96" y="58" width="12" height="106" fill="#5d4226"/><rect x="292" y="104" width="12" height="60" fill="#5d4226"/><polygon points="84,56 308,104 302,118 78,70" fill="#6e4f2c"/><polygon points="88,70 302,114 282,166 66,148" fill="#8a6238"/><g stroke="#5d4226" stroke-width="4"><line x1="122" y1="78" x2="106" y2="150"/><line x1="166" y1="88" x2="150" y2="154"/><line x1="210" y1="97" x2="194" y2="158"/><line x1="254" y1="106" x2="240" y2="162"/></g><polygon points="72,132 288,150 282,166 66,148" fill="#4c9a52" opacity=".9"/></g>`,
+    hut:`<rect width="400" height="160" fill="url(#skDay)"/>${trees}<rect y="160" width="400" height="60" fill="url(#gnd)"/><ellipse cx="200" cy="165" rx="130" ry="70" fill="#6b7a3a"/><ellipse cx="200" cy="155" rx="105" ry="55" fill="#7d8c42"/><g stroke="#5d4226" stroke-width="3" opacity=".8"><line x1="130" y1="120" x2="110" y2="180"/><line x1="165" y1="108" x2="150" y2="185"/><line x1="200" y1="104" x2="200" y2="188"/><line x1="235" y1="108" x2="250" y2="185"/><line x1="270" y1="120" x2="290" y2="180"/></g><ellipse cx="200" cy="178" rx="24" ry="22" fill="#2b1f14"/>`,
+    thatch:`<rect width="400" height="160" fill="url(#skDay)"/><rect y="160" width="400" height="60" fill="url(#gndDry)"/><g><rect x="120" y="90" width="12" height="76" fill="#5d4226"/><rect x="268" y="90" width="12" height="76" fill="#5d4226"/><polygon points="200,30 100,110 300,110" fill="#b98d4f"/><g fill="#8a6238"><path d="M130,95 q10,10 20,0 q10,10 20,0 q10,10 20,0 q10,10 20,0 q10,10 20,0 q10,10 20,0" stroke="#6e4f2c" stroke-width="3"/></g><polygon points="200,30 150,72 250,72" fill="#d9a85f"/></g>`,
+    firering:`<rect width="400" height="220" fill="url(#skNight)"/>${stars}${moon}<rect y="160" width="400" height="60" fill="#1c2418"/><g><ellipse cx="200" cy="180" rx="80" ry="22" fill="#333"/><g fill="url(#stoneG)"><ellipse cx="130" cy="176" rx="14" ry="10"/><ellipse cx="155" cy="188" rx="14" ry="10"/><ellipse cx="185" cy="193" rx="14" ry="10"/><ellipse cx="215" cy="193" rx="14" ry="10"/><ellipse cx="245" cy="188" rx="14" ry="10"/><ellipse cx="270" cy="176" rx="14" ry="10"/></g><g stroke="#6e4f2c" stroke-width="9" stroke-linecap="round"><line x1="170" y1="182" x2="230" y2="168"/><line x1="230" y1="182" x2="170" y2="168"/></g>${flame(200,168,1.15)}<g fill="#ffd76e"><circle cx="160" cy="120" r="2"/><circle cx="240" cy="110" r="2.4"/><circle cx="215" cy="95" r="1.6"/></g></g>`,
+    bowdrill:`<rect width="400" height="220" fill="url(#gndDry)"/><rect x="90" y="90" width="220" height="44" rx="8" fill="#8a6238"/><circle cx="200" cy="112" r="12" fill="#2b1f14"/><circle cx="200" cy="112" r="5" fill="#ff7a2e"/>${flame(200,104,.5)}<rect x="194" y="20" width="12" height="80" rx="6" fill="#c49a5f"/><path d="M120,40 Q200,80 280,36" stroke="#6e4f2c" stroke-width="8" fill="none"/><line x1="252" y1="42" x2="206" y2="62" stroke="#e8dcc0" stroke-width="3"/><ellipse cx="200" cy="150" rx="26" ry="10" fill="#3a2c1c"/><text x="200" y="154" font-size="10" text-anchor="middle" fill="#f2b544">coal</text>`,
+    torch:`<rect width="400" height="220" fill="url(#skNight)"/>${stars}<rect y="170" width="400" height="50" fill="#1c2418"/><rect x="192" y="90" width="16" height="90" rx="8" fill="#6e4f2c" transform="rotate(8 200 130)"/>${flame(208,96,1.5)}<ellipse cx="208" cy="120" rx="26" ry="10" fill="#8a6238"/>`,
+    tripod:`<rect width="400" height="160" fill="url(#skDusk)"/><rect y="160" width="400" height="60" fill="url(#gnd)"/><g stroke="#5d4226" stroke-width="9" stroke-linecap="round"><line x1="200" y1="30" x2="140" y2="180"/><line x1="200" y1="30" x2="200" y2="182"/><line x1="200" y1="30" x2="260" y2="180"/></g><line x1="200" y1="30" x2="200" y2="80" stroke="#3a2c1c" stroke-width="4"/><path d="M175,80 h50 l-8,34 h-34 Z" fill="#3d3d3d" stroke="#111" stroke-width="3"/>${flame(200,168,.9)}<path d="M190,60 q6,-10 0,-18 M210,60 q-6,-10 0,-18" stroke="#fff" stroke-width="3" fill="none" opacity=".6"/>`,
+    spear:`<rect width="400" height="120" fill="url(#skDay)"/><rect y="120" width="400" height="100" fill="url(#waterG)"/><line x1="60" y1="30" x2="300" y2="150" stroke="#6e4f2c" stroke-width="10" stroke-linecap="round"/><g stroke="#6e4f2c" stroke-width="6"><line x1="300" y1="150" x2="335" y2="150"/><line x1="300" y1="150" x2="328" y2="168"/><line x1="300" y1="150" x2="328" y2="132"/></g><g><ellipse cx="150" cy="180" rx="34" ry="12" fill="#9fd3e8"/><polygon points="184,180 204,168 204,192" fill="#9fd3e8"/><circle cx="132" cy="178" r="2.4" fill="#123"/></g>`,
+    rockoven:`<rect width="400" height="160" fill="url(#skDusk)"/><rect y="160" width="400" height="60" fill="url(#gnd)"/>${flame(110,160,.9)}<g fill="url(#stoneG)"><ellipse cx="80" cy="180" rx="16" ry="11"/><ellipse cx="115" cy="186" rx="16" ry="11"/><ellipse cx="145" cy="180" rx="16" ry="11"/></g><path d="M230,140 h110 l-14,50 h-82 Z" fill="#8a6238" stroke="#4a3524" stroke-width="4"/><ellipse cx="285" cy="140" rx="55" ry="12" fill="#5d4226"/><ellipse cx="285" cy="140" rx="44" ry="8" fill="url(#waterG)"/><path d="M270,110 q8,-12 0,-22 M290,110 q-8,-12 0,-22" stroke="#fff" stroke-width="4" fill="none" opacity=".7"/>`,
+    barkcup:`<rect width="400" height="160" fill="url(#skDay)"/><rect y="160" width="400" height="60" fill="url(#gnd)"/><path d="M120,110 h160 l-24,60 h-112 Z" fill="#b98d4f" stroke="#6e4f2c" stroke-width="5"/><ellipse cx="200" cy="110" rx="80" ry="14" fill="#8a6238"/><ellipse cx="200" cy="110" rx="66" ry="9" fill="url(#waterG)"/><path d="M150,60 q50,20 100,0" stroke="#4c9a52" stroke-width="8" fill="none"/>`,
+    claypot:`<rect width="400" height="160" fill="url(#skDusk)"/><rect y="160" width="400" height="60" fill="url(#gndDry)"/><path d="M160,100 q40,-14 80,0 q6,44 -20,62 q-20,10 -40,0 q-26,-18 -20,-62" fill="url(#mudG)" stroke="#4a2c1a" stroke-width="4"/><ellipse cx="200" cy="100" rx="40" ry="9" fill="#4a2c1a"/><g stroke="#e2725b" stroke-width="3" opacity=".8"><line x1="165" y1="120" x2="235" y2="120"/><line x1="168" y1="135" x2="232" y2="135"/></g>${flame(310,168,.8)}`,
+    bricks:`<rect width="400" height="150" fill="url(#skDay)"/><circle cx="330" cy="40" r="24" fill="#f2b544"/><rect y="150" width="400" height="70" fill="url(#gndDry)"/><g fill="url(#mudG)" stroke="#4a2c1a" stroke-width="3"><rect x="80" y="120" width="70" height="30" rx="4"/><rect x="155" y="120" width="70" height="30" rx="4"/><rect x="230" y="120" width="70" height="30" rx="4"/><rect x="117" y="88" width="70" height="30" rx="4"/><rect x="192" y="88" width="70" height="30" rx="4"/></g>`,
+    axe:`<rect width="400" height="160" fill="url(#skDay)"/><rect y="160" width="400" height="60" fill="url(#gnd)"/><rect x="120" y="120" width="160" height="44" rx="8" fill="#6e4f2c"/><g><rect x="180" y="30" width="16" height="110" rx="8" fill="#8a6238" transform="rotate(24 188 85)"/><path d="M196,44 l44,-20 6,30 -44,20 Z" fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"/></g><g fill="#c49a5f"><ellipse cx="120" cy="190" rx="8" ry="4"/><ellipse cx="260" cy="195" rx="8" ry="4"/></g>`,
+    cordage:`<rect width="400" height="220" fill="#20301f"/><path d="M40,90 q40,-40 80,0 t80,0 t80,0 t80,0" stroke="#c49a5f" stroke-width="14" fill="none"/><path d="M40,130 q40,40 80,0 t80,0 t80,0 t80,0" stroke="#8a6238" stroke-width="14" fill="none"/><circle cx="200" cy="185" r="24" fill="none" stroke="#c49a5f" stroke-width="8"/>`,
+    filter:`<rect width="400" height="220" fill="#20301f"/><polygon points="140,30 260,30 210,150 190,150" fill="#8a6238" stroke="#4a3524" stroke-width="4"/><rect x="152" y="52" width="96" height="18" fill="#4c9a52"/><rect x="160" y="72" width="80" height="18" fill="#e8dcc0"/><rect x="168" y="92" width="64" height="18" fill="#3a3a3a"/><rect x="178" y="112" width="44" height="18" fill="url(#stoneG)"/><g fill="url(#waterG)"><circle cx="200" cy="165" r="4"/><circle cx="200" cy="182" r="5"/><ellipse cx="200" cy="205" rx="34" ry="10"/></g>`,
+    fishtrap:`<rect width="400" height="110" fill="url(#skDay)"/><rect y="110" width="400" height="110" fill="url(#waterG)"/><g stroke="#5d4226" stroke-width="6"><line x1="60" y1="100" x2="60" y2="180"/><line x1="90" y1="100" x2="90" y2="182"/><line x1="120" y1="100" x2="120" y2="182"/><line x1="150" y1="100" x2="150" y2="182"/><line x1="50" y1="130" x2="165" y2="130"/></g><polygon points="180,140 260,120 260,164" fill="none" stroke="#5d4226" stroke-width="6"/><ellipse cx="300" cy="150" rx="40" ry="26" fill="none" stroke="#5d4226" stroke-width="6"/><ellipse cx="230" cy="146" rx="14" ry="6" fill="#dcefd8"/>`,
+    oven:`<rect width="400" height="160" fill="url(#skDusk)"/><rect y="160" width="400" height="60" fill="url(#gndDry)"/><path d="M110,170 a90,90 0 0 1 180,0 Z" fill="url(#mudG)" stroke="#4a2c1a" stroke-width="4"/><g fill="url(#stoneG)" opacity=".9"><ellipse cx="150" cy="130" rx="14" ry="10"/><ellipse cx="185" cy="115" rx="14" ry="10"/><ellipse cx="220" cy="115" rx="14" ry="10"/><ellipse cx="252" cy="132" rx="14" ry="10"/></g><path d="M175,170 a25,30 0 0 1 50,0 Z" fill="#2b1a10"/>${flame(200,168,.7)}`,
+    dakota:`<rect width="400" height="220" fill="url(#gndDry)"/><rect x="0" y="0" width="400" height="60" fill="url(#skDay)"/><rect y="56" width="400" height="10" fill="#4c9a52"/><ellipse cx="150" cy="66" rx="46" ry="12" fill="#2b1f14"/><rect x="110" y="66" width="80" height="90" fill="#3a2a1a"/><ellipse cx="280" cy="66" rx="30" ry="9" fill="#2b1f14"/><rect x="256" y="66" width="48" height="60" fill="#3a2a1a"/><rect x="150" y="110" width="130" height="20" fill="#241812"/>${flame(150,120,.8)}<g stroke="#fff" stroke-width="4" fill="none"><path d="M280,100 q-30,10 -70,14" /><polygon points="205,120 220,124 205,130" fill="#fff"/></g>`,
+    swedish:`<rect width="400" height="220" fill="url(#skNight)"/>${stars}<rect y="160" width="400" height="60" fill="#1c2418"/><rect x="150" y="90" width="100" height="80" rx="6" fill="#8a6238" stroke="#4a3524" stroke-width="4"/><ellipse cx="200" cy="90" rx="50" ry="14" fill="#c49a5f" stroke="#4a3524" stroke-width="4"/><g stroke="#4a3524" stroke-width="5"><line x1="160" y1="82" x2="240" y2="98"/><line x1="240" y1="82" x2="160" y2="98"/></g>${flame(200,84,1.1)}<path d="M170,50 h60 l-8,22 h-44 Z" fill="#3d3d3d"/>`,
+    trench:`<rect width="400" height="150" fill="url(#skDay)"/><rect y="150" width="400" height="70" fill="url(#gndDry)"/><rect x="70" y="140" width="260" height="44" rx="8" fill="#3a2a1a"/>${flame(150,150,.8)}${flame(250,150,.8)}<rect x="100" y="118" width="200" height="12" rx="6" fill="#5d4226"/><path d="M140,96 h44 l-6,24 h-32 Z" fill="#3d3d3d"/><path d="M220,96 h44 l-6,24 h-32 Z" fill="#3d3d3d"/><path d="M150,84 q6,-8 0,-14 M250,84 q-6,-8 0,-14" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/>`,
+    reflector:`<rect width="400" height="220" fill="url(#skNight)"/>${stars}<rect y="165" width="400" height="55" fill="#1c2418"/><g fill="#6e4f2c" stroke="#3a2a1a" stroke-width="3"><rect x="60" y="60" width="150" height="22" rx="11"/><rect x="60" y="86" width="150" height="22" rx="11"/><rect x="60" y="112" width="150" height="22" rx="11"/></g>${flame(280,158,1.2)}<g stroke="#ffd76e" stroke-width="3" opacity=".8"><path d="M235,120 q-14,10 -28,14"/><path d="M235,140 q-14,10 -28,14"/></g><polygon points="120,40 200,40 160,160" fill="#2f6b34" opacity=".5"/>`,
+    rocket:`<rect width="400" height="160" fill="url(#skDay)"/><rect y="160" width="400" height="60" fill="url(#gndDry)"/><g fill="url(#mudG)" stroke="#4a2c1a" stroke-width="4"><rect x="140" y="90" width="120" height="80"/><rect x="140" y="130" width="70" height="40"/></g><rect x="185" y="60" width="30" height="40" fill="#2b1a10"/><rect x="140" y="136" width="34" height="26" fill="#2b1a10"/>${flame(157,150,.55)}${flame(200,60,.7)}<line x1="100" y1="150" x2="140" y2="148" stroke="#6e4f2c" stroke-width="10" stroke-linecap="round"/><path d="M175,40 h50 l-7,22 h-36 Z" fill="#3d3d3d"/>`,
+    pitoven:`<rect width="400" height="80" fill="url(#skDay)"/><rect y="80" width="400" height="140" fill="url(#gndDry)"/><ellipse cx="200" cy="86" rx="120" ry="16" fill="#3a2a1a"/><g><rect x="120" y="110" width="160" height="16" rx="8" fill="url(#stoneG)"/><rect x="130" y="128" width="140" height="20" rx="10" fill="#4c9a52"/><rect x="125" y="150" width="150" height="16" rx="8" fill="#7d8c42"/><rect x="140" y="168" width="120" height="14" rx="7" fill="#5d4a30"/></g><path d="M180,70 q8,-12 0,-20 M210,70 q-8,-12 0,-20" stroke="#fff" stroke-width="4" fill="none" opacity=".8"/>`,
+    charcoal:`<rect width="400" height="150" fill="url(#skDusk)"/><rect y="150" width="400" height="70" fill="url(#gnd)"/><path d="M110,155 a90,75 0 0 1 180,0 Z" fill="#3a3226" stroke="#241d12" stroke-width="4"/><path d="M185,100 q-14,-24 4,-44 q16,20 2,44" fill="#cfd6dd" opacity=".85"/><path d="M215,105 q14,-20 -2,-40" fill="#cfd6dd" opacity=".6"/><rect x="188" y="140" width="24" height="16" rx="4" fill="#ff7a2e"/>`,
+    bloomery:`<rect width="400" height="220" fill="url(#skNight)"/>${stars}<rect y="165" width="400" height="55" fill="#1c2418"/><polygon points="160,40 240,40 260,165 140,165" fill="url(#mudG)" stroke="#3a2415" stroke-width="4"/><g stroke="#3a2415" stroke-width="4"><line x1="155" y1="80" x2="245" y2="80"/><line x1="150" y1="120" x2="250" y2="120"/></g><ellipse cx="200" cy="40" rx="40" ry="10" fill="#2b1a10"/>${flame(200,40,.8)}<rect x="248" y="110" width="70" height="14" rx="7" fill="#5d4226" transform="rotate(-18 248 110)"/><ellipse cx="200" cy="165" rx="30" ry="10" fill="#ff7a2e"/>`,
+    forge:`<rect width="400" height="220" fill="url(#skNight)"/>${stars}<rect y="160" width="400" height="60" fill="#1c2418"/><g fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"><rect x="140" y="96" width="36" height="48" rx="6"/><rect x="182" y="96" width="36" height="48" rx="6"/><rect x="224" y="96" width="36" height="48" rx="6"/></g><ellipse cx="200" cy="150" rx="64" ry="20" fill="#241812"/><ellipse cx="200" cy="148" rx="49" ry="14" fill="#ff7a2e"/><ellipse cx="200" cy="146" rx="28" ry="8" fill="#ffe98a"/>${flame(200,144,.6)}<g fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"><rect x="110" y="118" width="34" height="46" rx="6"/><rect x="256" y="118" width="34" height="46" rx="6"/></g><rect x="282" y="130" width="76" height="14" rx="7" fill="#5d4226" transform="rotate(-12 282 130)"/><g fill="#ffd76e"><circle cx="168" cy="82" r="2"/><circle cx="232" cy="70" r="2.4"/><circle cx="200" cy="56" r="1.6"/></g>`,
+    bellows:`<rect width="400" height="160" fill="url(#skDay)"/><rect y="160" width="400" height="60" fill="url(#gnd)"/><g><rect x="80" y="142" width="170" height="16" rx="8" fill="#8a6238" stroke="#4a3524" stroke-width="3"/><polygon points="92,142 238,142 222,102 108,102" fill="#6e4a2e"/><rect x="100" y="84" width="150" height="15" rx="7" fill="#a9744f" stroke="#4a3524" stroke-width="3" transform="rotate(-6 100 84)"/><rect x="82" y="68" width="14" height="42" rx="7" fill="#5d4226"/><polygon points="250,118 316,108 316,130 250,136" fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"/><g stroke="#7cc7e8" stroke-width="4" stroke-linecap="round"><line x1="324" y1="112" x2="352" y2="108"/><line x1="324" y1="124" x2="352" y2="128"/></g></g>`,
+    copper:`<rect width="400" height="160" fill="url(#skDusk)"/><rect y="160" width="400" height="60" fill="url(#gndDry)"/><polygon points="120,55 210,55 232,160 98,160" fill="url(#mudG)" stroke="#3a2415" stroke-width="4"/><ellipse cx="165" cy="120" rx="24" ry="18" fill="#2b1a10"/>${flame(165,118,.6)}<rect x="262" y="86" width="34" height="52" rx="8" fill="#7a5a3a" stroke="#3a2415" stroke-width="4" transform="rotate(24 279 112)"/><rect x="292" y="128" width="10" height="30" fill="#ff9d3c"/><rect x="276" y="158" width="52" height="20" rx="4" fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"/><rect x="282" y="158" width="40" height="7" fill="#ff7a2e"/><g fill="#3fa34d"><ellipse cx="70" cy="180" rx="18" ry="12"/><ellipse cx="102" cy="184" rx="14" ry="10"/><ellipse cx="44" cy="186" rx="12" ry="9"/></g>`,
+    ironsand:`<rect width="400" height="110" fill="url(#skDay)"/><rect y="104" width="400" height="16" fill="#4c9a52"/><rect y="118" width="400" height="102" fill="url(#waterG)"/><ellipse cx="130" cy="176" rx="72" ry="16" fill="#2b2b30"/><ellipse cx="130" cy="172" rx="72" ry="12" fill="#454550"/><line x1="250" y1="20" x2="228" y2="108" stroke="#c9c9c9" stroke-width="4"/><path d="M214,108 v20 a14,14 0 0 0 28,0 v-20" fill="none" stroke="#d33" stroke-width="13"/><rect x="207" y="104" width="14" height="10" fill="#eee"/><rect x="235" y="104" width="14" height="10" fill="#eee"/><g fill="#222"><circle cx="200" cy="150" r="3"/><circle cx="222" cy="142" r="2.5"/><circle cx="244" cy="148" r="3"/><circle cx="210" cy="162" r="2.5"/></g><g stroke="#222" stroke-width="2" stroke-dasharray="3 4"><line x1="200" y1="148" x2="214" y2="132"/><line x1="244" y1="146" x2="238" y2="132"/></g><ellipse cx="320" cy="180" rx="30" ry="10" fill="#8a6238"/><ellipse cx="320" cy="177" rx="24" ry="7" fill="#c49a5f"/>`,
+    casting:`<rect width="400" height="160" fill="url(#skDay)"/><rect y="160" width="400" height="60" fill="url(#gndDry)"/><rect x="90" y="148" width="100" height="28" rx="4" fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"/><ellipse cx="140" cy="148" rx="34" ry="9" fill="#2b1a10"/><rect x="128" y="146" width="24" height="7" fill="#ff7a2e"/><rect x="238" y="76" width="38" height="56" rx="9" fill="#7a5a3a" stroke="#3a2415" stroke-width="4" transform="rotate(26 257 104)"/><rect x="252" y="118" width="11" height="36" fill="#ff9d3c" transform="rotate(6 257 136)"/><path d="M300,168 l64,-10 6,12 -64,10 Z" fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"/>`,
+    soap:`<rect width="400" height="160" fill="url(#skDay)"/><rect y="160" width="400" height="60" fill="url(#gnd)"/>${flame(140,158,.7)}<rect x="112" y="156" width="56" height="10" rx="5" fill="#5d4226"/><path d="M120,118 h60 l-8,40 h-44 Z" fill="#3d3d3d"/><ellipse cx="150" cy="118" rx="30" ry="8" fill="#9fd3e8"/><path d="M142,102 q6,-8 0,-14 M158,102 q-6,-8 0,-14" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/><ellipse cx="275" cy="178" rx="42" ry="13" fill="#8d8578"/><g fill="#f2e8c9" stroke="#b8a878" stroke-width="2"><rect x="234" y="142" width="34" height="22" rx="5"/><rect x="272" y="142" width="34" height="22" rx="5"/><rect x="253" y="120" width="34" height="22" rx="5"/></g>`,
+    lamp:`<rect width="400" height="220" fill="url(#skNight)"/>${stars}<rect y="165" width="400" height="55" fill="#1c2418"/><circle cx="200" cy="138" r="62" fill="#f2b544" opacity=".13"/><path d="M150,148 q50,26 100,0 l-14,24 h-72 Z" fill="url(#mudG)" stroke="#3a2415" stroke-width="4"/><ellipse cx="200" cy="148" rx="50" ry="10" fill="#4a2c1a"/><ellipse cx="200" cy="148" rx="38" ry="6" fill="#f2b544" opacity=".8"/><rect x="196" y="126" width="8" height="22" rx="4" fill="#3a2a1a"/>${flame(200,128,.6)}`,
+    concrete:`<rect width="400" height="150" fill="url(#skDay)"/><circle cx="70" cy="38" r="22" fill="#f2b544" opacity=".9"/><rect y="150" width="400" height="70" fill="url(#gndDry)"/><g fill="url(#stoneG)" stroke="#4a5560" stroke-width="3"><ellipse cx="110" cy="170" rx="20" ry="14"/><ellipse cx="145" cy="176" rx="17" ry="12"/><ellipse cx="80" cy="178" rx="15" ry="11"/></g><path d="M232,160 a55,50 0 0 1 110,0 Z" fill="url(#mudG)" stroke="#4a2c1a" stroke-width="4"/><ellipse cx="287" cy="160" rx="16" ry="14" fill="#2b1a10"/>${flame(287,158,.5)}<g fill="#b9b2a4" stroke="#7d7668" stroke-width="2"><rect x="196" y="58" width="44" height="24" rx="3"/><rect x="244" y="58" width="44" height="24" rx="3"/><rect x="220" y="32" width="44" height="24" rx="3"/></g>`,
+    waterwheel:`<rect width="400" height="120" fill="url(#skDay)"/><rect y="120" width="400" height="100" fill="url(#waterG)"/><g stroke="#5d4226" stroke-width="8"><line x1="150" y1="58" x2="150" y2="172"/><line x1="250" y1="58" x2="250" y2="172"/></g><g transform="translate(200,130)"><circle r="52" fill="none" stroke="#6e4f2c" stroke-width="10"/><g stroke="#8a6238" stroke-width="8"><line x1="-48" y1="0" x2="48" y2="0"/><line x1="0" y1="-48" x2="0" y2="48"/><line x1="-34" y1="-34" x2="34" y2="34"/><line x1="-34" y1="34" x2="34" y2="-34"/></g><g fill="#8a6238"><rect x="-59" y="-10" width="14" height="20" rx="3"/><rect x="45" y="-10" width="14" height="20" rx="3"/><rect x="-10" y="-59" width="20" height="14" rx="3"/><rect x="-10" y="45" width="20" height="14" rx="3"/></g><circle r="10" fill="#4a3524"/></g><g fill="#dcefd8"><circle cx="138" cy="98" r="3"/><circle cx="266" cy="88" r="3"/><circle cx="258" cy="172" r="3"/></g><path d="M118,142 q-20,6 -30,20 M282,142 q20,6 30,20" stroke="#fff" stroke-width="4" fill="none" opacity=".8"/>`,
+  };
+  return open + (S[scene] || S.firering) + `</svg>`;
+}
+/* step-picture backgrounds cycle through camp hues */
+const STEP_HUES = ["linear-gradient(135deg,#2f5d34,#79b473)","linear-gradient(135deg,#6b4a2a,#c98f3d)","linear-gradient(135deg,#4a4a52,#9fb3c8)","linear-gradient(135deg,#6e3a2e,#e2725b)","linear-gradient(135deg,#274b63,#7cc7e8)","linear-gradient(135deg,#4a3a63,#a08ac9)"];
+
+const BUILDS = [
+{title:"Lean-to Shelter", icon:"🛖", scene:"shelter", cat:"Shelter", diff:"Easy", time:"1–2 hrs", mats:["sticks","leaves","bark","vine"], desc:"The classic one-night shelter. A slanted roof of sticks + thatch that blocks wind and rain.", cap:"Finished lean-to: slanted thatch roof, dry bed of leaves inside.",
+ gather:["2 forked upright poles (arm-thick, ~1.5 m)","1 long ridge pole (~3 m)","15–25 straight sticks for the roof frame","Armfuls of dry leaves, bark sheets & pine boughs","Vine strips or roots for lashing"],
+ steps:[{e:"📍",t:"Pick high, flat ground. Lay a ridge pole between two forked uprights, low side facing the wind."},{e:"🪵",t:"Lean roof sticks along one side of the ridge, spaced a hand apart."},{e:"🧺",t:"Weave thin branches horizontally through the roof sticks."},{e:"🍂",t:"Layer thatch from the bottom up: bark first, then thick leaves (30+ cm). Like roof shingles — lower layers stick out over upper ones."},{e:"🛏️",t:"Pile extra leaves inside for a mattress. Test: pour water on top — inside must stay dry."}],
+ safety:"Face the opening away from wind. Never build in dry riverbeds (flash floods) or under dead branches."},
+{title:"Debris Hut", icon:"🏕️", scene:"hut", cat:"Shelter", diff:"Medium", time:"2–4 hrs", mats:["sticks","leaves","bark"], desc:"The warmest shelter you can make with bare hands — a leaf-pile cocoon that can save your life.", cap:"Finished debris hut: low leaf mound, just big enough to crawl into.",
+ gather:["1 stout ridge pole (body-length + 1 m)","Many short ribs (sticks)","Huge pile of dry leaves — 10+ big armfuls (this is the insulation)","Bark sheets for the outer shell"],
+ steps:[{e:"🪵",t:"Prop the ridge pole on a stump/log at hip height, other end on the ground."},{e:"⛺",t:"Lean rib sticks on both sides to form a narrow A-frame just bigger than your body."},{e:"🍂",t:"Cover the frame with bark sheets, then bury it under 60–100 cm of leaves."},{e:"🚪",t:"Crawl in, plug the door with a leaf-stuffed sack or more leaves."},{e:"🌡️",t:"You should barely fit — small = warm. If you can sit up easily, add more leaves."}],
+ safety:"Hypothermia kills fast. Build shelter BEFORE dark. Keep the entrance small and out of the wind."},
+{title:"A-Frame Leaf Thatch Roof", icon:"🌾", scene:"thatch", cat:"Shelter", diff:"Medium", time:"2–3 hrs", mats:["sticks","leaves","vine"], desc:"Learn real thatching: overlapping leaf layers that shed rain like shingles.", cap:"Finished thatch: steep A-frame with overlapping golden layers.",
+ gather:["Frame poles + battens (thin sticks)","Bundles of long leaves, grass, ferns or palm fronds (lots!)","Vine cordage for tying"],
+ steps:[{e:"📐",t:"Build an A-frame with 30–45° pitch — steep sheds water, flat leaks."},{e:"🪵",t:"Tie horizontal battens every 25 cm up the roof."},{e:"🌾",t:"Tie thatch bundles starting at the BOTTOM edge, overlapping upward like shingles."},{e:"🥞",t:"Add 3–4 overlapping layers. Finished roof should be ~15 cm thick."},{e:"💧",t:"Hose-test (or bucket-test): water must run off, not drip through."}],
+ safety:"Thatch is flammable — keep it far from any fire. Shake out leaves for insects before handling."},
+{title:"Stone Fire Ring + Campfire", icon:"🔥", scene:"firering", cat:"Fire", diff:"Easy", time:"30 min", mats:["stones","sticks","leaves","bark"], desc:"A safe, wind-proof fire lay: ring, tinder bundle, teepee kindling and fuel log cabin.", cap:"Finished fire ring: stone circle, teepee flames, sparks rising.",
+ gather:["10–14 dry, palm-size stones (NOT river-wet)","Tinder: dry bark shavings, dead grass, seed fluff (a big softball)","Kindling: pencil-thin dry sticks","Fuel: thumb-thick then wrist-thick dry sticks","Clear mineral soil patch 3 m wide"],
+ steps:[{e:"🧹",t:"Clear all leaves to bare dirt, 3 m across. Ring it with dry stones, one layer, small gaps for air."},{e:"🪹",t:"Make a tinder bundle (bird's-nest shape) and place it in the center."},{e:"⛺",t:"Teepee pencil sticks over the tinder, leaving a door on the windward side."},{e:"🔥",t:"Light the tinder through the door; feed progressively bigger sticks as it catches."},{e:"🪵",t:"Add a log-cabin square of thicker sticks around it for a long burn."}],
+ safety:"Check fire bans first. Keep fires knee-high. NEVER leave it. Drown, stir, drown again — coals must be cold to touch."},
+{title:"Dakota Fire Hole", icon:"🕳️", scene:"dakota", cat:"Fire", diff:"Easy", time:"1 hr", mats:["sticks","stones"], desc:"A stealthy underground fireplace: hotter, wind-proof, and sips firewood. Two holes + one tunnel.", cap:"Cutaway: fire chamber + air tunnel feeding it fresh oxygen.",
+ gather:["A spot of firm, stone-free soil","Digging stick + flat stone or bark scoop","Dry tinder, kindling and short fuel sticks","A few flat stones for the pot rest"],
+ steps:[{e:"🕳️",t:"Dig the main hole ~30 cm wide and 30–40 cm deep — like a bucket in the ground."},{e:"↔️",t:"30 cm upwind, dig a smaller air hole. Tunnel them together at the bottom (fist-size passage). The cross-section picture shows the goal."},{e:"🪨",t:"Line the rim with flat stones, leaving the tunnel mouth open to the wind."},{e:"🔥",t:"Build a small teepee fire in the main hole. The tunnel sucks air in — flames burn hot and nearly smokeless."},{e:"🍲",t:"Rest sticks or flat stones across the top as a pot stand. Feed short sticks straight down."}],
+ safety:"Only in deep soil with no roots (roots can smoulder underground for days). Fill the holes back in when done."},
+{title:"Swedish Log Torch Stove", icon:"🪵", scene:"swedish", cat:"Fire", diff:"Easy", time:"1 hr", mats:["sticks"], desc:"One fat log becomes its own stove: flat cooking top, chimney flame, hours of burn.", cap:"Finished torch: cross-cut log with a jet of flame on top, pot balanced above.",
+ gather:["1 dry, flat-topped log 30–50 cm thick, knee-high","Saw/axe or fire + stone to cut slots","Tinder + a handful of kindling","A pot or pan"],
+ steps:[{e:"🪵",t:"Stand the log flat-end up on bare soil. It must not wobble."},{e:"✂️",t:"Cut a cross (or star of 6 cuts) two-thirds down from the top — these are air vents and the firebox."},{e:"🔥",t:"Stuff tinder + kindling into the cuts and light the center. It will roar like a chimney."},{e:"🍲",t:"Balance your pot on top (add 3 pebbles as pot feet for airflow). Boils fast, burns 1–3 hours."},{e:"🌙",t:"Let it burn down to a glowing stump — perfect evening heater. Drown thoroughly after."}],
+ safety:"Dry standing-dead wood only. Keep the torch on bare soil away from thatch and tents — it throws sparks upward."},
+{title:"Trench Fire Kitchen", icon:"🍳", scene:"trench", cat:"Fire", diff:"Medium", time:"1–2 hrs", mats:["sticks","stones"], desc:"A long cooking fireplace: two pots at once, controllable heat, great for groups.", cap:"Finished trench: two fires under a spit bar with pots simmering.",
+ gather:["Open soil patch 1.5 m long","Digging stick + stones","Long green spit bar (2 m) + 2 forked uprights","Dry firewood in three sizes"],
+ steps:[{e:"📏",t:"Mark a trench ~30 cm wide, 1 m long, 25 cm deep, pointing INTO the wind."},{e:"⛏️",t:"Dig it out; pile soil on the sides as a windbreak. Lay stones along the rims."},{e:"🔥",t:"Light 2–3 small fires along the trench — small and hot beats one big smoky fire."},{e:"🍲",t:"Lay the spit bar across the forked uprights over the trench; hang pots or grill sticks."},{e:"🎛️",t:"Control heat by sliding coals: pile under the pot to boil, rake aside to simmer."}],
+ safety:"Fill trenches back in when you leave — open holes trap animals and ankles. Never trench near tree roots."},
+{title:"Stone Reflector Fireplace", icon:"🧱", scene:"reflector", cat:"Fire", diff:"Medium", time:"2 hrs", mats:["stones","sticks","mud"], desc:"A log-and-stone wall behind your fire that throws heat back into your shelter like a radiator.", cap:"Finished fireplace: stacked-log reflector wall bouncing heat toward camp.",
+ gather:["Fire ring basics (stones, tinder, kindling, fuel)","8–12 straight logs 1–1.5 m for the wall","2 sturdy upright posts","Mud to chink gaps (optional)"],
+ steps:[{e:"📍",t:"Place your fire between your shelter opening and the reflector spot, ~1 m from each."},{e:"🪵",t:"Drive two posts and stack logs between them, 1 m high — the wall faces the fire."},{e:"🟤",t:"Chink gaps with mud so heat reflects instead of leaking through."},{e:"🔥",t:"Build a long (not tall) fire parallel to the wall. Flames lean heat onto the logs."},{e:"🧘",t:"Sit between shelter and fire: you get direct heat in front, reflected heat behind the flames, and the wall blocks wind."}],
+ safety:"Green or damp wall logs can steam and pop — stand back at lighting. Keep the wall 1+ m from flames so it never catches."},
+{title:"Bow Drill Fire Set", icon:"🏹", scene:"bowdrill", cat:"Fire", diff:"Hard", time:"2–3 hrs + practice", mats:["sticks","stones","vine","bark"], desc:"Make fire from friction alone: bow, spindle, hearth board and bearing block.", cap:"Close-up: spindle smoking in the hearth notch, coal glowing below.",
+ gather:["Hearth board: dry softwood plank (cedar/willow, thumb-thick)","Spindle: dry straight stick, 20 cm × thumb-thick","Bow: curved springy stick + vine/string cordage","Bearing block: hardwood or stone with a socket","Tinder bundle + char-ready bark nest"],
+ steps:[{e:"🔪",t:"Carve a small notch (pie-slice) at the edge of the hearth board."},{e:"🏹",t:"Loop the spindle in the bowstring, tip in the notch, top in the bearing block."},{e:"💨",t:"Saw the bow smoothly, steady pressure — smoke in ~30–60 s of good form."},{e:"🔥",t:"Keep going until a glowing coal (black powder) forms in the notch."},{e:"🌬️",t:"Tap the coal into the tinder nest, fold it closed and blow gently into flame."}],
+ safety:"Practice at home first — this takes real skill. Kneel comfortably; stop if blisters form. Have your tinder ready BEFORE you start."},
+{title:"Pine-Pitch Torch", icon:"🕯️", scene:"torch", cat:"Fire", diff:"Medium", time:"1 hr", mats:["sticks","bark"], desc:"A long-burning camp torch from a stick, bark wrap and tree resin.", cap:"Finished torch: flaming head on a long handle against the night.",
+ gather:["1 straight sturdy stick (1 m)","Dry bark strips","Pine/spruce resin (sticky sap lumps)","Charred cloth alternative: crushed dry fungus/punk wood"],
+ steps:[{e:"🔪",t:"Split one end of the stick into 4 prongs (wedge with a stone)."},{e:"🟠",t:"Pack resin + dry punk wood between the prongs."},{e:"🪶",t:"Wrap tightly with bark strips and lash with vine."},{e:"🔥",t:"Warm gently near (not in) fire to melt resin into the bundle."},{e:"🕯️",t:"Light it — it burns bright 20–40 min. Hold upwind, away from thatch."}],
+ safety:"Torches drip burning resin. Clear overhead branches, keep water nearby, never carry inside a shelter."},
+{title:"Mud Rocket Stove", icon:"🚀", scene:"rocket", cat:"Furnaces", diff:"Medium", time:"3–4 hrs + drying", mats:["mud","stones","sand","water","sticks"], desc:"The most fuel-efficient wild stove: an L-shaped fire chamber that burns sticks smokelessly.", cap:"Finished rocket stove: insulated L-chamber, sticks feeding in, pot roaring on top.",
+ gather:["Clay-rich mud + sand (50/50)","Dry stones for the base","A straight stick bundle as the burn-tunnel form (removed later)","Water + chopped grass fiber","A flat pot stone or grill"],
+ steps:[{e:"🪨",t:"Build a dry-stone base ~40 cm square and knee-high on bare soil."},{e:"🟤",t:"Mould thick mud walls into an L: a horizontal feed tunnel meeting a vertical chimney (~25 cm tall). Use the stick bundle as the inner form."},{e:"🧱",t:"Pack walls 10+ cm thick; smooth the inside. Slide the form sticks out."},{e:"☀️",t:"Dry 24–48 hrs with tiny curing fires — rushing this cracks the stove."},{e:"🔥",t:"Feed thin sticks horizontally into the tunnel; flames shoot up the chimney under your pot. A handful of twigs boils a litre."}],
+ safety:"Cure slowly — steam cracks thick mud. The chimney gets fiercely hot; keep kids and thatch well back."},
+{title:"Beehive Clay Oven", icon:"🍞", scene:"oven", cat:"Furnaces", diff:"Hard", time:"5–7 hrs + drying", mats:["mud","stones","sand","water","sticks"], desc:"A tall mud oven with a chimney hole: bake flatbread, roast roots, and heat the camp.", cap:"Finished beehive oven: stone-studded dome with a glowing bake mouth.",
+ gather:["20+ flat dry stones","Mud + sand mortar (thick peanut-butter)","Stick dome frame or sand mound as a form","Flat stone door + slab floor"],
+ steps:[{e:"🪨",t:"Lay a flat stone floor pad on cleared mineral soil."},{e:"🧱",t:"Stack a tall dome ring of stones (~50 cm wide inside), mortaring joints with mud. Leave a 20 cm mouth and a small smoke hole at the top back."},{e:"🟤",t:"Cover the dome with 8–10 cm of mud plaster, inside and out."},{e:"🔥",t:"Dry 24–48 hrs with a tiny curing fire inside (warm, not roaring). Poke the smoke hole open."},{e:"🍞",t:"Bake: big fire inside 1 hr, rake out coals, wipe floor, bake bread on the hot stone 10–15 min."}],
+ safety:"Cure slowly or steam cracks the dome. Keep the oven away from shelters/tents. Coals stay dangerously hot for hours."},
+{title:"Earth Pit Oven (Hangi)", icon:"🥔", scene:"pitoven", cat:"Furnaces", diff:"Medium", time:"3–5 hrs", mats:["stones","sticks","leaves","water"], desc:"Slow-roast a feast underground: hot stones + wrapped food + soil lid = tender everything.", cap:"Cutaway: hot stones, wrapped food, leaf blanket and soil lid steaming.",
+ gather:["Pit site: firm soil ~1 m wide","12–16 dry dense stones (fist to head-size)","Firewood for a 1–2 hr pre-fire","Green leaves + bark for wrapping","Water for steam + soil for sealing"],
+ steps:[{e:"⛏️",t:"Dig a pit ~60 cm deep. Keep the soil pile nearby for the lid."},{e:"🔥",t:"Burn a big fire in the pit 1–2 hrs until the stones glow at the edges. Rake out loose coals."},{e:"🥬",t:"Lay food (roots, wrapped parcels) on the stones over a bed of wet green leaves."},{e:"🧺",t:"Cover with more wet leaves, then bark, then 15+ cm of soil — seal every steam leak."},{e:"⏳",t:"Wait 3–5 hrs. Open one corner: steam blast means dinner. Reseal if not tender."}],
+ safety:"Mark the pit clearly — buried heat is invisible. Open the lid upwind; the first steam can scald. Fill the pit in after."},
+{title:"Charcoal Mound Kiln", icon:"⚫", scene:"charcoal", cat:"Furnaces", diff:"Hard", time:"Full day", mats:["sticks","leaves","mud","water"], desc:"Bake wood into charcoal: hotter, cleaner fuel for forges, filters and cooking.", cap:"Finished kiln: sealed earth mound puffing thin blue smoke from the top vent.",
+ gather:["Lots of dry hardwood sticks (wrist-thick, cut to equal length)","Leaves + loose soil for the seal","Mud for patching","A fire + water bucket on standby"],
+ steps:[{e:"🪵",t:"Stack wood teepee-style around a central chimney hole, on bare soil — tight, no big gaps."},{e:"🍂",t:"Blanket the stack with leaves, then 15 cm of soil. Leave the top vent and 3–4 base vents open."},{e:"🔥",t:"Light through the top vent. Patch flame leaks with mud — smoke should be thin and bluish."},{e:"🎛️",t:"Tend 6–12 hrs: close vents progressively as sections finish (smoke turns thin blue, mound settles). Seal everything for the cooldown."},{e:"⚫",t:"Open cold the next day. Ringing black chunks = charcoal. Brown soft bits go back in next time."}],
+ safety:"A kiln is a slow-burning fire that must be watched in shifts. Never build near woods in dry season; keep water ready and never breathe thick smoke."},
+{title:"Mini Clay Shaft Furnace", icon:"🏭", scene:"bloomery", cat:"Furnaces", diff:"Hard", time:"Full day", mats:["mud","sand","water","sticks","stones"], desc:"A small super-hot clay furnace for melting, glass and metal experiments — advanced only.", cap:"Finished furnace: clay shaft with side air pipe, glowing work opening at the base.",
+ gather:["Lots of clay mud + sand + straw fiber","Dry hardwood + home-made charcoal for fuel","A hollow reed/bamboo or pipe as the air tube (tuyère)","Stones for the base pad","Crucible: a thick clay cup, fully dried"],
+ steps:[{e:"🧱",t:"Build a tapered clay shaft ~50 cm tall on a stone pad, walls 8–10 cm thick, with a work opening at the base and a side hole for the air tube."},{e:"☀️",t:"Dry 2–3 days, then cure with small fires. Cracks? Patch with wet clay and re-cure."},{e:"⚫",t:"Fill with glowing charcoal, then lower your crucible in with long tongs/sticks."},{e:"🌬️",t:"Pump air gently through the side tube (bellows, or steady blowing). The bed should glow bright yellow-white."},{e:"🦺",t:"Work briefly, then let everything cool overnight before touching anything."}],
+ safety:"EXTREME heat + fumes. Adults only, outdoors, upwind, with water, sand, gloves and a burn kit. Never smelt unknown ores (toxic fumes like zinc/lead can kill). This is an educational demo, not a foundry."},
+{title:"Tripod Cooking Stand", icon:"🍲", scene:"tripod", cat:"Food", diff:"Easy", time:"30–45 min", mats:["sticks","vine"], desc:"Hang a pot (or bark container) over fire without burning your dinner — or your hands.", cap:"Finished tripod: three lashed poles with a pot steaming over flames.",
+ gather:["3 straight poles ~2 m, thumb-thick","Vine cordage (~2 m)","A cross-stick + hook stick"],
+ steps:[{e:"🪵",t:"Lay the 3 poles parallel, lash them together ~25 cm from the top."},{e:"⛺",t:"Stand them up into a tripod over the fire spot."},{e:"🪢",t:"Hang the cross-stick from the lash point with vine so it sits ~40 cm over flames."},{e:"🪝",t:"Notch a hook stick to hold your pot/bark vessel."},{e:"🎛️",t:"Adjust height: higher = simmer, lower = boil."}],
+ safety:"Test stability with water weight BEFORE heating. Green (live-cut is discouraged) — use dead hardwood so poles don't burn through quickly."},
+{title:"Stick Fishing Spear", icon:"🎣", scene:"spear", cat:"Food", diff:"Medium", time:"1–2 hrs", mats:["sticks","stones"], desc:"Carve a 3-prong frog/fish gig from a single sapling — the oldest fishing tool on Earth.", cap:"Finished gig: three barbed prongs striking as a fish darts below.",
+ gather:["1 straight hardwood sapling ~2 m","A sharp stone flake or knife","Vine for binding","Fire for hardening tips"],
+ steps:[{e:"🔪",t:"Split one end into 3–4 prongs, ~25 cm deep. Wedge small spacers between them."},{e:"📍",t:"Sharpen each prong to a point; add tiny backwards barbs if you can."},{e:"🪢",t:"Bind below the splits so they can't split further."},{e:"🔥",t:"Harden tips briefly in fire edges (don't char). The picture shows the finished head."},{e:"🎯",t:"Spear at dusk in shallows: aim LOW — water bends light and fish look higher than they are."}],
+ safety:"Check fishing laws — spearing is restricted in many places. Never point at people. Watch footing on slippery rocks."},
+{title:"Rock Oven / Stone Boiling", icon:"♨️", scene:"rockoven", cat:"Food", diff:"Medium", time:"1–2 hrs", mats:["stones","sticks","water","leaves"], desc:"Cook without a pot: heat stones and drop them in a bark container to boil water.", cap:"Finished boil: glowing stones hissing in a bark pot, steam rising.",
+ gather:["8–12 dry granite stones (fist-size)","Fire + tongs sticks","Bark or wood container holding water","Leaf lid / flat stone"],
+ steps:[{e:"🔥",t:"Heat stones in a hot fire 30–45 min until glowing-hot at edges."},{e:"💧",t:"Fill your bark container ⅔ with water + food."},{e:"♨️",t:"Roll one hot stone in with two green sticks (tongs). It will hiss and steam."},{e:"🔄",t:"Swap in fresh hot stones; remove cooled ones. 3–4 swaps = a rolling boil."},{e:"🍂",t:"Cover with leaves/flat stone between swaps to hold heat."}],
+ safety:"Only dry, non-layered rocks. Wet/slate/river rocks can burst. Use tongs — stones cause severe burns."},
+{title:"Bark Water Container", icon:"🥣", scene:"barkcup", cat:"Containers", diff:"Easy", time:"30–60 min", mats:["bark","vine","water"], desc:"Fold a watertight cup or tray from a single sheet of bark — no carving needed.", cap:"Finished cup: folded bark tray holding clear water.",
+ gather:["1 large flexible bark sheet (fallen birch/elm/cedar)","4 small wooden pegs or thorns","Vine strips + pine resin or mud to seal (optional)"],
+ steps:[{e:"💧",t:"Soak or warm the bark so it bends without cracking."},{e:"🎁",t:"Fold up the four corners like wrapping a present."},{e:"📌",t:"Pin each folded corner with a peg/thorn."},{e:"🟤",t:"Seal seams with warm resin or wet clay on the outside."},{e:"🧪",t:"Test with cold water first. It won't hold fire directly — use hot stones to heat."}],
+ safety:"Never peel bark from living trees in parks — use fallen bark. Wash the container before drinking from it."},
+{title:"Clay / Mud Pot", icon:"🏺", scene:"claypot", cat:"Containers", diff:"Hard", time:"3–5 hrs + drying", mats:["mud","water","sand"], desc:"Turn anthill clay or riverbank mud into a real cooking pot, fired in a campfire.", cap:"Finished pot: coil-built terracotta vessel, ring-hard after firing.",
+ gather:["Sticky clay-rich mud (rolls into a snake without cracking)","Clean sand (1 handful per 3 handfuls clay = temper)","Smooth stone for burnishing","Dry firewood for firing"],
+ steps:[{e:"🟤",t:"Pick out pebbles; knead clay + sand 10 min until smooth like dough."},{e:"🌀",t:"Roll coils (finger-thick) and stack rings; pinch smooth inside and out. Walls ~1 cm."},{e:"☀️",t:"Dry the pot slowly in shade 1–2 days — no sun cracks. It must ring when tapped."},{e:"🔥",t:"Fire: nestle in coals, build fire around/over it, bake 1–2 hrs until terracotta hard."},{e:"❄️",t:"Cool slowly in ashes. First use: boil plain water to season."}],
+ safety:"Some wild clays contain contaminants — don't cook acidic foods first; season well. Pots crack if heated empty."},
+{title:"Mud Bricks (Adobe)", icon:"🧱", scene:"bricks", cat:"Camp craft", diff:"Medium", time:"2–3 hrs + drying", mats:["mud","water","sand","leaves"], desc:"Sun-baked bricks for ovens, windbreaks and raised beds. Stronger than you'd think.", cap:"Finished bricks: sun-dried adobe blocks stacked in running bond.",
+ gather:["Clayey mud + sand (50/50 test: brick shouldn't crack or crumble)","Chopped dry grass/leaves as fiber","Flat ground + leaf molds or a box shape","Water"],
+ steps:[{e:"🦶",t:"Mix mud, sand, fiber and water; stomp to a stiff dough."},{e:"🧱",t:"Pack into brick molds (~25×12×8 cm); smooth the tops."},{e:"☀️",t:"Turn out onto dry leaves; sun-dry 3–7 days, flipping daily."},{e:"🧱",t:"Stack with mud mortar: running bond (offset joints) like real brickwork."},{e:"🏠",t:"Cap walls with bark/stone so rain can't melt them."}],
+ safety:"Adobe melts in sustained rain — always add a roof or cap. Wear gloves; wash hands (soil bacteria)."},
+{title:"Stone Axe / Hammer", icon:"🪓", scene:"axe", cat:"Tools", diff:"Hard", time:"2–4 hrs", mats:["stones","sticks","vine"], desc:"Bind a sharp stone head to a stick handle — a working chopper for splitting kindling.", cap:"Finished axe: ground stone head lashed tight to a springy handle.",
+ gather:["1 hard sharp-edged stone (flint/quartzite fist-size)","1 springy hardwood handle stick","Vine + wet rawhide-like bark strips","Sand + water for grinding","Mud to bed the head (optional)"],
+ steps:[{e:"🪨",t:"Knock/grind one edge of the stone to a V bevel using a bigger rock + sand slurry."},{e:"🪵",t:"Notch or fork the handle where the head will sit."},{e:"🟤",t:"Seat the head, pack mud around the joint, let it stiffen."},{e:"🪢",t:"Lash a tight X with vine/bark; tuck the ends and let it dry (it shrinks = tighter). The picture shows the finished lashing."},{e:"🪵",t:"Test on soft wood first. Re-sharpen by grinding, not hammering."}],
+ safety:"Wear eye protection (or look away) when knapping stone — flakes are razor sharp. Keep hands behind the strike zone."},
+{title:"Bark Cordage (Rope)", icon:"🪢", scene:"cordage", cat:"Tools", diff:"Medium", time:"1 hr", mats:["bark","vine","water"], desc:"Twist inner bark into cord strong enough to lash shelters and hang pots.", cap:"Finished cordage: two twisted strands counter-wrapped into strong rope.",
+ gather:["Inner bark strips (cedar/linden/willow) or vine fibers","Water for soaking"],
+ steps:[{e:"💧",t:"Soak fibers until pliable; split into shoelace widths."},{e:"🌀",t:"Twist two bundles clockwise individually, then wrap them counter-clockwise together."},{e:"🧵",t:"Keep twists tight; splice in new fiber by overlapping 10 cm."},{e:"📏",t:"Aim for 3–5 mm cord for lashing, 2 mm for fishing line."},{e:"🧪",t:"Dry under tension. Test: it should hold your body weight looped before trusting it overhead."}],
+ safety:"Strong cord looks safe but can snap — never climb on handmade rope. Keep spare cord dry."},
+{title:"Sand & Charcoal Water Filter", icon:"💧", scene:"filter", cat:"Water", diff:"Easy", time:"30–45 min", mats:["sand","stones","bark","water","leaves"], desc:"A layered filter that turns murky water clear. ALWAYS boil after filtering.", cap:"Cutaway: layered grass, sand, charcoal and stones dripping clear water.",
+ gather:["Bark cone or hollow log as funnel","Layers: grass → sand → crushed charcoal → small stones → sand","Murky water","Fire + container for boiling"],
+ steps:[{e:"🔽",t:"Poke a small hole in the bark cone; lay grass over it so sand can't escape."},{e:"🥪",t:"Add 5 cm clean sand, 3 cm crushed cold charcoal, 2 cm tiny stones, 3 cm more sand — like the picture layers."},{e:"💧",t:"Pour murky water through slowly; catch it below."},{e:"🔁",t:"Run it through twice — water should go from muddy to clear."},{e:"🔥",t:"BOIL 1 full minute (rolling boil) before drinking. Clear ≠ safe."}],
+ safety:"Filtering removes dirt, NOT germs. Boiling is mandatory. Never drink flood water near farms/roads (chemicals)."},
+{title:"Woven Stick Fish Trap", icon:"🐟", scene:"fishtrap", cat:"Food", diff:"Hard", time:"3–4 hrs", mats:["sticks","vine","stones"], desc:"A funnel weir that guides fish in but not out. Ancient, effective, fascinating to build.", cap:"Finished weir: stick fence guiding fish through the funnel into the pen.",
+ gather:["30+ thin straight sticks (1–1.5 m)","Vine cordage","Stones to anchor","Shallow stream spot"],
+ steps:[{e:"🪵",t:"Weave a fence of upright sticks across ¾ of the stream, lashed to 2 horizontal rails."},{e:"🔽",t:"Build a cone funnel pointing upstream into a holding pen (circle of sticks). See the picture layout."},{e:"🐟",t:"Fish following the fence find the funnel mouth and swim in."},{e:"🪨",t:"Weight the base with stones; gaps must be smaller than your target fish."},{e:"♻️",t:"Check every few hours; release undersized fish immediately."}],
+ safety:"Fish traps are regulated almost everywhere — build to learn, then remove it. Never block a whole stream."},
+{title:"Side-Blast Clay Forge", icon:"⚒️", scene:"forge", cat:"Furnaces", diff:"Hard", time:"Full day + drying", mats:["sticks","stones","mud","water"], desc:"The heart of real metalworking: a charcoal forge with a side air blast that reaches welding heat. Powers the copper, iron and casting guides.", cap:"Finished forge: stone firebox with a glowing charcoal bed and side air pipe.",
+ gather:["Dry stacked stones for a U-shaped firebox (~50 cm across)","Clay mud + sand for lining and sealing","A hollow reed, bamboo or pipe ~60 cm (tuyère air tube)","Lots of hardwood charcoal (see Charcoal Mound Kiln)","Bag bellows or blowpipe (see Bag Bellows guide)","Water bucket + sand for emergencies"],
+ steps:[{e:"🧱",t:"Stack a U-shaped stone firebox on bare soil, two stones high, open at the front. Leave a fist-size hole low on one side wall for the air tube."},{e:"🟤",t:"Line the inside with 5+ cm of clay-sand plaster — it insulates and stops the stones cracking. Push the air tube through the side hole so its tip sits just inside the firebox."},{e:"☀️",t:"Dry and cure with small wood fires over a day. Patch any cracks with wet clay — steam cracks are the #1 forge killer."},{e:"⚫",t:"Fill deep with glowing hardwood charcoal, then connect the bellows to the outer end of the tube. Gentle steady blasts: the bed should glow bright yellow-white, nearly smokeless."},{e:"🔨",t:"You now hold forging heat (~1200°C+). Heat metal yellow-hot, work it fast on a stone anvil, reheat often. Bank the coals with ash to 'turn off'."}],
+ safety:"EXTREME heat, sparks and carbon-monoxide fumes. Adults only, outdoors, upwind, with water, sand, gloves, eye protection and a burn kit. Never forge galvanized or zinc-coated metal (poisonous fumes)."},
+{title:"Bag Bellows", icon:"🌬️", scene:"bellows", cat:"Tools", diff:"Medium", time:"2 hrs", mats:["sticks","bark","vine","leaves"], desc:"Lungs for your forge and furnace: pump a steady air blast and double your fire's heat. Required for smelting and forging.", cap:"Finished bellows: two boards squeezing a bark bag, air jetting from the nozzle.",
+ gather:["2 flat hardwood boards (~40×25 cm)","Flexible bark sheet or hide for the bag","A straight hollow tube (reed/bamboo) for the nozzle","Vine cordage + resin or mud for sealing","2 stick handles","Dry grass/leaves for testing airflow"],
+ steps:[{e:"🪵",t:"Cut two matching boards. Bore a hole in the bottom board's center and fit the nozzle tube through it, sealed with resin or mud — air must ONLY exit here."},{e:"🪶",t:"Sandwich the bark bag between the boards: peg and lash the edges airtight on three sides, open at the back like a pillow."},{e:"🪢",t:"Lash handles to both boards. Add a simple intake flap (bark square) over the back opening so air enters but can't rush back out."},{e:"🌬️",t:"Pump slowly and fully — long strokes beat fast flapping. Aim the nozzle into the forge's air tube."},{e:"🔥",t:"Test: a steady blast should make coals glow white-yellow and roar. Patch leaks with mud until the jet stays strong a metre out."}],
+ safety:"Keep bellows, hands and handles clear of the heat zone — nozzles conduct heat. Work in shifts; overheated charcoal beds throw sparks."},
+{title:"Copper from Green Rock", icon:"🟢", scene:"copper", cat:"Furnaces", diff:"Hard", time:"Full day", mats:["stones","sticks","mud","sand"], desc:"Humanity's first metal! Roast and smelt green malachite stone into real copper — Dr. Stone walked this exact road toward bronze and iron.", cap:"Finished smelt: green malachite rocks become glowing copper poured into a flat mold.",
+ gather:["Green, heavy copper-ore rock (malachite/azurite — bright green/blue crusts)","Charcoal (lots) + side-blast forge or shaft furnace","A thick, fully dried clay crucible","Flat stone or clay mold (see Clay Molds guide)","Crushing stones + a sorting mat"],
+ steps:[{e:"🪨",t:"Identify ore: unusually heavy green-banded rock. Crack a corner — bright green inside is promising. (No green rock? Practice the whole firing with the furnace and skip the pour.)"},{e:"🔨",t:"Crush ore to pea-size with stones. Roast the grains on a hot flat rock 30+ min to drive off water and sulfur — it darkens and stops steaming."},{e:"🔥",t:"Charge the forge: glowing charcoal bed, crucible of roasted ore buried in the coals, full air blast. Copper melts around 1085°C — the charge glows orange-white and slumps."},{e:"🥄",t:"Skim the crusty slag with a green stick. The heavy glowing puddle at the bottom is copper."},{e:"🫳",t:"Pour into a pre-heated, bone-dry flat mold. Cool fully before touching — you made metal from stone! 🎉"}],
+ safety:"Adults only, outdoors, upwind. Molten metal plus any moisture equals explosion: everything must be bone dry. Ore dust is toxic — don't breathe it; wash hands and tools after."},
+{title:"Iron from Black Sand", icon:"🧲", scene:"ironsand", cat:"Furnaces", diff:"Hard", time:"Full weekend", mats:["sand","water","stones","sticks"], desc:"Straight out of Dr. Stone: gather magnetic black sand, concentrate it, and smelt a real iron bloom in a clay furnace. The hardest — and most epic — build here.", cap:"Gathering: a magnet on a string pulls black iron sand from the streambed.",
+ gather:["Black magnetic sand (a magnet should grab it)","A magnet + tub or bark pan for washing","Clay shaft furnace + bellows (see those guides)","Large amounts of hardwood charcoal","Flat anvil stone + heavy hammerstone","Patience: expect one small bloom per full day"],
+ steps:[{e:"🧲",t:"Find black-sand streaks where streams slow down — inside bends, behind rocks. Drag a magnet in a bag through wet sand: black grains that cling are magnetite, Dr. Stone's iron ore."},{e:"🥣",t:"Pan it like gold: swirl sand in water and wash the light grains away until mostly black sand remains. Sun-dry completely."},{e:"🏭",t:"Run the shaft furnace on charcoal with a full bellows blast. Trickle in dry black sand and charcoal in thin layers over hours — the heat does the chemistry (around 1500°C). "},{e:"🔥",t:"At the end, break open the furnace base: a spongy glowing mass (bloom) mixed with slag. This is raw iron plus impurities."},{e:"🔨",t:"Consolidate: reheat the bloom yellow-hot and hammer-fold it repeatedly to squeeze out slag. Result: a small bar of real bloom iron. Legendary! 🎉"}],
+ safety:"The most demanding build in this app: extreme heat for hours, fumes, heavy hammering. Experienced adults only, full protective gear, fire crew and water on standby. Yields are small — the lesson is the process."},
+{title:"Clay Molds & Casting", icon:"🗡️", scene:"casting", cat:"Tools", diff:"Medium", time:"2–3 hrs + drying", mats:["mud","sand","sticks","stones"], desc:"Turn smelted copper into real tools: carve a mold, dry it bone-hard, and pour. The second half of every smelting story.", cap:"The pour: glowing metal streams from crucible to mold beside a finished casting.",
+ gather:["Fine clay + sharp sand (50/50)","A model: a carved wood or stone shape of your tool","Charcoal dust as parting powder","Dry flat stones + long stick tongs","Molten copper from the forge (or practice with melted wax first)"],
+ steps:[{e:"🗿",t:"Press your model halfway into damp fine mold-mix in a frame; dust with charcoal powder so the halves separate."},{e:"📦",t:"Pack the top half on, then cut a funnel (sprue) and air vents with a stick. Open it, remove the model — a perfect cavity remains."},{e:"☀️",t:"Dry the mold slowly for days, then bake it beside a fire until it rings. DAMP MOLDS EXPLODE on contact with metal — this step is life-or-death."},{e:"🫳",t:"Bed the mold in dry sand and pour in one smooth motion with tongs. Never stop mid-pour."},{e:"❄️",t:"Cool fully, break the mold, and smooth the casting with sandstone. Practice with beeswax or lead-free solder before risking copper."}],
+ safety:"Molten metal plus moisture equals steam explosion. Mold, ground, tools and crucible must be bone dry. Face shield, leather, closed shoes, and dry sand (never water) to smother spills."},
+{title:"Wood-Ash Lye Soap", icon:"🧼", scene:"soap", cat:"Science", diff:"Medium", time:"2–3 hrs + 3 weeks curing", mats:["sticks","water","bark","leaves"], desc:"Dr. Stone's hygiene revolution, for real: leach lye from hardwood ashes, mix it with fat, and make actual soap. Filed under Science because it's chemistry you can hold.", cap:"Finished soap: cream bars stacked beside the ash-leaching pot and fire.",
+ gather:["Lots of white hardwood ash (oak/beech/maple — never painted or treated wood)","Rainwater or soft water","Rendered animal fat or clean cooking oil","A bark or wood leaching bucket with a bottom hole + grass filter","Wooden spoons + bark-tray molds","An egg or potato (lye tester!)"],
+ steps:[{e:"🪣",t:"Leach the lye: pack ash into the bucket over grass, pour warm water through, and catch the slick brown liquid. Repeat until an egg or potato floats with a coin-size patch showing — that's strong lye."},{e:"🔥",t:"Boil the lye down gently (outdoors!) until concentrated. It feels slippery between your fingers — that slipperiness IS future soap."},{e:"🥘",t:"Melt the fat or oil and stir in hot lye slowly, always stirring one way. In 30–60 min it thickens like pudding ('trace')."},{e:"🧱",t:"Pour into bark molds. Rest 48 hours, then cut into bars."},{e:"⏳",t:"Cure bars on a rack 3–4 weeks, turning often. Mild, hard, real soap. Wash with water you filtered and boiled! 🎉"}],
+ safety:"Lye burns skin and blinds eyes: gloves plus eye protection, long sleeves, vinegar and water for splashes, kids and pets far away. Never use aluminum pots — lye eats them (wood, clay or stainless only)."},
+{title:"Clay Oil Lamp", icon:"🪔", scene:"lamp", cat:"Science", diff:"Easy", time:"1–2 hrs + drying", mats:["mud","water","bark","vine"], desc:"Dr. Stone lit the cave with science — you can too: a pinch-formed clay lamp burning plant oil with a fiber wick. Older than the pyramids.", cap:"Finished lamp: a glowing clay dish holding a steady flame in the dark.",
+ gather:["Fine clay + a little sand","Plant oil or rendered fat (fuel)","Twisted inner-bark fiber for the wick","A smooth stone for shaping","A pit fire for firing the lamp"],
+ steps:[{e:"🟤",t:"Pinch a small, thick dish with a pinched spout (the wick rest). Keep the walls chunky — thin lamps crack."},{e:"☀️",t:"Dry fully in shade, then pit-fire with your pottery method until ring-hard."},{e:"🧵",t:"Twist a wick: roll inner-bark fibers into a 5 mm cord with one end frayed like a tiny broom."},{e:"🫗",t:"Fill the dish half with oil and lay the wick with one end soaking and the tip resting on the spout. Soak 10 minutes."},{e:"🔥",t:"Light the tip for a calm teardrop flame. Trim the wick to control smoke — one fill burns for hours."}],
+ safety:"An open flame in a dish: set it on stone, away from thatch and tents, never carry it lit, and snuff (don't blow) to extinguish. Keep spare oil far from the forge."},
+{title:"Limestone Concrete", icon:"🏛️", scene:"concrete", cat:"Science", diff:"Hard", time:"Full day + drying", mats:["stones","water","sticks","sand"], desc:"Dr. Stone revived civilization with concrete — here is the real recipe: burn limestone, slake it, and mix the mortar that built Rome.", cap:"Finished work: fresh concrete blocks beside the lime kiln and limestone pile.",
+ gather:["Limestone rocks (fizz with vinegar — that's the test!)","A hot kiln or deep pit fire burning for hours","Clean sand + small gravel","Water + a mixing pit","Wooden forms for blocks"],
+ steps:[{e:"🧪",t:"Test your rock: drip vinegar on it. Fizzing means carbonate — limestone, chalk or marble all work."},{e:"🔥",t:"Burn limestone in the hottest kiln fire you can make for 4+ hours. It comes out lighter, crumbly and chalky — that's quicklime. Do NOT touch it or breathe the dust."},{e:"💧",t:"Slake carefully: add quicklime TO water (never the reverse), a little at a time. It hisses and heats — stir with a long stick until it's a smooth paste (slaked lime). "},{e:"🥣",t:"Mix 1 part slaked lime with 3 parts sand (plus gravel for concrete). It should hold its shape like stiff dough."},{e:"🧱",t:"Pack into forms or lay as mortar. It hardens over days by drinking CO₂ from the air — mist it if it dries too fast. Rome-approved! 🏛️"}],
+ safety:"Quicklime is caustic: eye protection, gloves and a dust mask are mandatory, and slake slowly (it can boil and spit). Flood skin contact with LOTS of water. Keep lime dry and away from kids and animals."},
+{title:"Stick Waterwheel", icon:"⚙️", scene:"waterwheel", cat:"Science", diff:"Medium", time:"3–4 hrs", mats:["sticks","vine","stones","water"], desc:"Dr. Stone powered the kingdom with water: build an undershot wheel that turns stream flow into spinning power for grinding or lifting.", cap:"Finished wheel: a paddle wheel spinning between lashed posts in the current.",
+ gather:["Straight poles for the axle + frame","8–12 short planks or split sticks for paddles","Vine cordage + pegs","Heavy anchor stones","A steady, shallow stream spot"],
+ steps:[{e:"📍",t:"Pick a steady, shallow run. Drive two forked posts (one on each bank) to hold the axle above mid-current."},{e:"⭕",t:"Build two rims (lashed hoops of bent green sticks) on a straight axle pole, joined by paddle boards around the edge like a mill wheel."},{e:"💧",t:"Hang the wheel so the bottom paddles dip into the fastest water. Shim the posts with stones until the axle is level."},{e:"🪢",t:"Lash everything, wedge pegs, and anchor with stones. It should spin freely by hand first."},{e:"⚙️",t:"Set it in the current: flowing water shoves the paddles around. Add a crank stick or vine-loop belt to drive a grinder or water-lifter."}],
+ safety:"Cold, fast water is dangerous: work from the bank with a buddy, wear a life vest if unsure, and never wade above the knees in current. Anchor well — a loose wheel becomes a battering ram."},
+];
+const KIT = ["Dry tinder bundle (bark shavings + grass)","Armful of pencil-thin kindling","Wrist-thick dry firewood","10 dry palm-size stones","2 long ridge poles + roof sticks","Big pile of dry leaves / thatch","Bark sheets (fallen only)","Vine / root cordage","Clay-rich mud + sand","Clear water + boil container","Bag bellows or blowpipe (forge air)","Dry hardwood charcoal (forge fuel)"];
+
+/* ---------- render helpers ---------- */
+const $ = s => document.querySelector(s);
+const grid = $("#grid"), heroMats = $("#heroMats"), matChips = $("#matChips"),
+      have = $("#have"), finderResults = $("#finderResults");
+const state = { q:"", cat:"", diff:"", mat:"", map:1, have:new Set(["sticks"]) };
+const matLabel = id => (MATERIALS.find(m=>m.id===id)||{}).label || id;
+const matEmoji = id => (MATERIALS.find(m=>m.id===id)||{}).e || "•";
+
+function tagDiff(d){ return d==="Easy"?"diff-easy":d==="Medium"?"diff-medium":"diff-hard"; }
+
+function filtered(){
+  return BUILDS.filter(b=>{
+    if(state.cat && b.cat!==state.cat) return false;
+    if(state.diff && b.diff!==state.diff) return false;
+    if(state.mat && !b.mats.includes(state.mat)) return false;
+    if(state.q){
+      const hay=(b.title+" "+b.desc+" "+b.cat+" "+b.mats.map(matLabel).join(" ")).toLowerCase();
+      if(!hay.includes(state.q.toLowerCase())) return false;
+    }
+    return true;
+  });
+}
+function renderGrid(){
+  const list = filtered();
+  $("#countTitle").textContent = state.mat||state.cat||state.q||state.diff
+    ? `${list.length} build${list.length===1?"":"s"} found` : `All ${BUILDS.length} builds`;
+  grid.innerHTML = list.length ? list.map((b)=>{
+    const i = BUILDS.indexOf(b);
+    return `<article class="card" data-i="${i}" tabindex="0" role="button" aria-label="${b.title}">
+      <div class="card-art">${sceneSVG(b.scene)}<div class="card-badge">${b.icon}</div><div class="card-step-n">🖼 ${b.steps.length} steps</div></div>
+      <div class="card-body">
+        <h3>${b.title}</h3><p>${b.desc}</p>
+        <div class="meta"><span class="tag">${b.cat}</span><span class="tag ${tagDiff(b.diff)}">${b.diff}</span><span class="tag">⏱ ${b.time}</span></div>
+        <div class="meta">${b.mats.map(m=>`<span class="tag">${matEmoji(m)} ${matLabel(m)}</span>`).join("")}</div>
+        <div class="card-foot"><span>${b.gather.length} materials · ${b.steps.length} steps</span><span class="open">Open →</span></div>
+      </div></article>`;
+  }).join("") : `<div class="empty">🌵 Nothing matches — try clearing a filter or searching "furnace".</div>`;
+  grid.querySelectorAll(".card").forEach(c=>{
+    c.onclick=()=>openModal(+c.dataset.i);
+    c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openModal(+c.dataset.i);}};
+  });
+}
+function renderHeroMats(){
+  heroMats.innerHTML = MATERIALS.map(m=>`<div class="mat ${state.mat===m.id?"active":""}" data-m="${m.id}"><span class="e">${m.e}</span><small>${m.label}</small></div>`).join("");
+  heroMats.querySelectorAll(".mat").forEach(el=>el.onclick=()=>{
+    state.mat = state.mat===el.dataset.m ? "" : el.dataset.m;
+    syncChips(); renderGrid(); renderHeroMats();
+    document.getElementById("guides").scrollIntoView({behavior:"smooth"});
+  });
+}
+function renderCatDiff(){
+  const c=$("#cat"); CATS.forEach(t=>{const o=document.createElement("option");o.textContent=t;c.appendChild(o);});
+}
+function renderChips(){
+  matChips.innerHTML = `<button class="chip ${!state.mat?"active":""}" data-m="">✨ All materials</button>` +
+    MATERIALS.map(m=>`<button class="chip ${state.mat===m.id?"active":""}" data-m="${m.id}">${m.e} ${m.label}</button>`).join("");
+  matChips.querySelectorAll(".chip").forEach(ch=>ch.onclick=()=>{state.mat=ch.dataset.m;syncChips();renderGrid();renderHeroMats();});
+}
+function syncChips(){ renderChips(); }
+function renderHave(){
+  have.innerHTML = MATERIALS.map(m=>`<button data-m="${m.id}" class="${state.have.has(m.id)?"on":""}">${m.e} ${m.label}</button>`).join("");
+  have.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    state.have.has(b.dataset.m)?state.have.delete(b.dataset.m):state.have.add(b.dataset.m);
+    renderHave(); renderFinder();
+  });
+}
+function renderFinder(){
+  const scored = BUILDS.map(b=>{
+    const got=b.mats.filter(m=>state.have.has(m)).length;
+    return {b, got, pct:Math.round(got/b.mats.length*100)};
+  }).sort((a,c)=>c.pct-a.pct || a.b.mats.length-c.b.mats.length);
+  const top = scored.slice(0,6);
+  finderResults.innerHTML = state.have.size===0
+    ? `<div class="f-result">👆 Toggle at least one material above.</div>`
+    : top.map(({b,got,pct})=>{
+      const missing=b.mats.filter(m=>!state.have.has(m));
+      return `<div class="f-result"><b>${b.icon} ${b.title} — ${pct}% ready</b>
+        <span>You have ${got}/${b.mats.length}. ${missing.length?`Still need: ${missing.map(m=>matEmoji(m)+" "+matLabel(m)).join(", ")}.`:`You have everything! 🎉`}</span></div>`;
+    }).join("");
+}
+/* ---------- wild resource map ---------- */
+const RES_SPOTS = [
+{n:1, x:478, y:252, icon:"🟤", name:"Clay / Mud", where:"River cutbanks (outside of bends), lakeshore edges, pond bottoms, road cuttings.", look:"Smooth, dense soil in grey, tan or red layers; holds shape when squeezed.", test:"Roll a pencil-thick snake — bends without cracking means clay. A little vinegar fizz is okay (lime-rich clay).", uses:["mud"], builds:"Mud bricks, clay pots, ovens, forge lining, casting molds, oil lamps"},
+{n:2, x:648, y:336, icon:"⏳", name:"Sand", where:"River point bars (inside of bends), lakeshore beaches, sandstone outcrops.", look:"Loose, gritty, pale grains that slip through fingers.", test:"Squeeze a wet handful — it falls apart instead of holding shape. Rubbed grains squeak.", uses:["sand"], builds:"Clay temper, water filter layers, concrete, casting molds"},
+{n:3, x:418, y:150, icon:"🪨", name:"Building Stones", where:"Creek beds, scree slopes at cliff bases, rock outcrops.", look:"Hard, heavy rocks that ring when struck together.", test:"Granite and sandstone are fire-safe. Avoid layered slate and wet river rock in fires (steam explosions).", uses:["stones"], builds:"Fire rings, ovens, forges, axes, boiling stones, anchors"},
+{n:4, x:282, y:196, icon:"🪵", name:"Deadwood & Sticks", where:"Forest floor, windthrow piles, beaver dams — always dead and down.", look:"Grey wood with bark slipping off; snaps instead of bending.", test:"Crack test: a sharp snap means dry and ready. A dull bend means green or wet.", uses:["sticks"], builds:"Shelters, fires, furnace fuel, tools, fish traps, waterwheel"},
+{n:5, x:228, y:158, icon:"🪶", name:"Bark Sheets", where:"Fallen logs and stumps — never strip living trees in parks.", look:"Papery birch curls, fibrous cedar or elm strips.", test:"Bends in a curve without snapping means workable. Soak or warm stiff sheets first.", uses:["bark"], builds:"Water containers, cordage, thatch, bellows bags, leaching buckets"},
+{n:6, x:398, y:236, icon:"🌿", name:"Vines & Roots", where:"Forest edges and streambanks — wild grape, willow shoots, spruce roots.", look:"Long, flexible runners, often hanging or trailing.", test:"Wrap one around your wrist — no cracking means good lashing and cordage stock.", uses:["vine"], builds:"Lashings, tripods, fish traps, cordage, waterwheel belts"},
+{n:7, x:626, y:168, icon:"🍂", name:"Leaves & Thatch", where:"Forest-floor drifts, meadows, reed and cattail beds.", look:"Dry whole leaves, long grasses, reeds and rushes.", test:"Crunch-dry means insulation-ready. Shake out insects before piling high.", uses:["leaves"], builds:"Debris hut, thatch roofs, mattresses, filter grass layer, brick fiber"},
+{n:8, x:528, y:52, icon:"💧", name:"Fresh Water", where:"Springs (clear and flowing), fast riffles over rock — never stagnant pools.", look:"Clear, odourless, flowing water.", test:"Looks mean nothing for germs: always filter AND boil 1 full minute.", uses:["water"], builds:"Drinking, clay mixing, soap making, slaking lime, panning iron sand"},
+{n:9, x:196, y:112, icon:"🟠", name:"Tree Resin", where:"Wounds and bark blisters on pine, spruce and fir.", look:"Amber lumps or beads with a strong pine smell.", test:"Softens when chewed, burns with tall black smoke — superb fuel and glue.", uses:["bark"], builds:"Torches, bark-cup seals, bellows seals, fire extender"},
+{n:10, x:512, y:292, icon:"⚫", name:"Iron Sand", where:"Black streaks where water slows — inside river bends, behind boulders, storm lines on beaches.", look:"Heavy black grains mixed into the sand.", test:"A magnet grabs them while plain sand falls away — that's magnetite, Dr. Stone's ore.", uses:["sand"], builds:"Iron from Black Sand (smelt it in the shaft furnace!)"},
+{n:11, x:104, y:188, icon:"⚪", name:"Limestone", where:"Pale cliffs, quarries, chalk downs, old stone walls.", look:"Pale grey-white rock, often with fossils or shell print.", test:"Drip vinegar on it — fizzing means carbonate, and carbonate means concrete.", uses:["stones"], builds:"Limestone Concrete (burn it into quicklime first!)"},
+{n:12, x:388, y:128, icon:"🍄", name:"Tinder Fungus", where:"Hoof-shaped brackets on dead birch (birch polypore, chaga).", look:"Grey-brown hoofs with a pale, corky underside.", test:"Shaved dry inner flesh catches a spark or coal and holds it like charcoal.", uses:["sticks"], builds:"Fire kits: tinder for the fire ring, bow drill and torches"},
+];
+function mapSVG(){
+  const spots = RES_SPOTS.map(s=>`<g class="mk" data-n="${s.n}"><circle cx="${s.x}" cy="${s.y}" r="17" fill="${state.map===s.n?"#7bc47f":"#f2b544"}" stroke="#0e1511" stroke-width="3"/><text x="${s.x}" y="${s.y+6}" font-size="15" font-weight="800" text-anchor="middle" fill="#0e1511">${s.n}</text></g>`).join("");
+  return `<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated landscape showing where wild resources are found">
+  <rect width="800" height="150" fill="url(#skDay)"/><circle cx="700" cy="44" r="26" fill="#f2b544" opacity=".9"/>
+  <g><polygon points="0,150 70,40 140,150" fill="#8d99a8"/><polygon points="70,40 95,75 45,75" fill="#fff"/><polygon points="110,150 180,60 250,150" fill="#77828f"/><polygon points="180,60 202,90 158,90" fill="#fff"/></g>
+  <rect y="150" width="800" height="270" fill="url(#gnd)"/>
+  <g><polygon points="52,260 52,175 80,160 120,175 162,162 162,260" fill="#8d99a8"/><g stroke="#6e7780" stroke-width="3"><line x1="70" y1="195" x2="150" y2="195"/><line x1="62" y1="220" x2="140" y2="220"/><line x1="75" y1="243" x2="155" y2="243"/></g><g stroke="#5d646c" stroke-width="2"><line x1="100" y1="165" x2="95" y2="195"/><line x1="130" y1="168" x2="136" y2="200"/></g><ellipse cx="60" cy="168" rx="26" ry="10" fill="#9fc46a"/><ellipse cx="150" cy="166" rx="30" ry="10" fill="#9fc46a"/></g>
+  <g><rect x="196" y="120" width="9" height="70" fill="#4a3524"/><polygon points="200,62 178,124 222,124" fill="#2f6b34"/><rect x="252" y="128" width="9" height="66" fill="#4a3524"/><polygon points="256,72 234,132 278,132" fill="#356b38"/><rect x="306" y="124" width="9" height="68" fill="#4a3524"/><polygon points="310,68 288,128 332,128" fill="#2f6b34"/></g>
+  <g><rect x="360" y="96" width="8" height="70" fill="#e8e2d4"/><polygon points="364,60 344,100 384,100" fill="#4c9a52"/><rect x="404" y="100" width="8" height="66" fill="#e8e2d4"/><polygon points="408,64 388,104 428,104" fill="#4c9a52"/><g fill="#8d8578"><ellipse cx="352" cy="120" rx="10" ry="8"/><ellipse cx="420" cy="128" rx="10" ry="8"/></g></g>
+  <g fill="#7d8c42"><ellipse cx="600" cy="180" rx="130" ry="42"/><ellipse cx="660" cy="150" rx="90" ry="30"/></g>
+  <g stroke="#4c9a52" stroke-width="3"><line x1="580" y1="160" x2="576" y2="140"/><line x1="620" y1="165" x2="626" y2="145"/><line x1="660" y1="162" x2="656" y2="142"/></g>
+  <path d="M440,0 C430,60 400,100 415,150 C430,200 470,220 460,270 C455,300 470,320 500,330" fill="none" stroke="url(#waterG)" stroke-width="34" stroke-linecap="round"/>
+  <path d="M440,0 C430,60 400,100 415,150 C430,200 470,220 460,270 C455,300 470,320 500,330" fill="none" stroke="#dcefd8" stroke-width="3" stroke-dasharray="8 10" opacity=".6"/>
+  <ellipse cx="628" cy="336" rx="140" ry="58" fill="url(#waterG)"/><ellipse cx="628" cy="336" rx="152" ry="66" fill="none" stroke="#e8dcc0" stroke-width="12" opacity=".8"/>
+  <g><ellipse cx="470" cy="252" rx="46" ry="26" fill="#6e4a2e"/><ellipse cx="470" cy="246" rx="40" ry="20" fill="#8a5f3a"/></g>
+  <g fill="url(#stoneG)"><ellipse cx="412" cy="146" rx="9" ry="7"/><ellipse cx="428" cy="152" rx="8" ry="6"/><ellipse cx="404" cy="158" rx="7" ry="6"/></g>
+  <g><circle cx="528" cy="48" r="7" fill="url(#waterG)"/><path d="M528,58 q-4,14 2,24" stroke="url(#waterG)" stroke-width="5" fill="none"/></g>
+  <ellipse cx="512" cy="292" rx="34" ry="10" fill="#22222a"/>
+  <g><ellipse cx="540" cy="330" rx="34" ry="12" fill="#3f5a34"/><g stroke="#4c9a52" stroke-width="3"><line x1="528" y1="326" x2="524" y2="308"/><line x1="544" y1="328" x2="548" y2="310"/><line x1="556" y1="326" x2="560" y2="310"/></g></g>
+  <g><rect x="262" y="188" width="52" height="12" rx="6" fill="#5d4226"/><rect x="216" y="150" width="44" height="11" rx="5" fill="#6e4f2c"/></g>
+  <g fill="#f2b544"><circle cx="188" cy="112" r="4"/><circle cx="206" cy="122" r="3"/></g>
+  ${spots}</svg>`;
+}
+function renderMap(){
+  $("#mapSvg").innerHTML = mapSVG();
+  const s = RES_SPOTS.find(r=>r.n===state.map) || RES_SPOTS[0];
+  $("#mapDetail").innerHTML = `<h3>${s.icon} ${s.n}. ${s.name}</h3>
+    <div class="latin">📍 Where to search</div><p style="margin:0 0 4px">${s.where}</p>
+    <dl><dt>👁️ What it looks like</dt><dd>${s.look}</dd>
+    <dt>🧪 Field test</dt><dd>${s.test}</dd></dl>
+    <div class="map-builds"><span class="tag">🔨 Used for: ${s.builds}</span></div>
+    ${s.uses&&s.uses.length?`<button class="btn primary" id="mapGo">See ${matLabel(s.uses[0]).toLowerCase()} builds →</button>`:""}`;
+  $("#mapLegend").innerHTML = RES_SPOTS.map(r=>`<button data-n="${r.n}" class="${state.map===r.n?"on":""}">${r.n}. ${r.icon} ${r.name}</button>`).join("");
+  document.querySelectorAll("#mapSvg .mk").forEach(g=>g.addEventListener("click",()=>selectSpot(+g.dataset.n)));
+  document.querySelectorAll("#mapLegend button").forEach(b=>b.addEventListener("click",()=>selectSpot(+b.dataset.n)));
+  const go = $("#mapGo");
+  if(go) go.addEventListener("click",()=>{
+    state.mat = s.uses[0]; syncChips(); renderGrid(); renderHeroMats();
+    document.getElementById("guides").scrollIntoView({behavior:"smooth"});
+  });
+}
+function selectSpot(n){ state.map = n; renderMap(); }
+/* modal */
+const overlay=$("#overlay"); let current=-1;
+function openModal(i){
+  current=i; const b=BUILDS[i];
+  $("#mHero").innerHTML = sceneSVG(b.scene) + `<div class="cap">🖼 ${b.cap||("Finished: "+b.title)}</div>`;
+  $("#mArt").textContent=b.icon; $("#mTitle").textContent=b.title;
+  $("#mSub").textContent=`${b.cat} · ${b.diff} · ⏱ ${b.time}`;
+  $("#mTags").innerHTML=`${b.mats.map(m=>`<span class="tag">${matEmoji(m)} ${matLabel(m)}</span>`).join("")}`;
+  $("#mMats").innerHTML=b.gather.map(g=>`<li>${g}</li>`).join("");
+  $("#mFacts").innerHTML=`<b>Category:</b> ${b.cat}<br><b>Difficulty:</b> ${b.diff}<br><b>Time:</b> ${b.time}<br><b>Materials:</b> ${b.mats.map(matLabel).join(", ")}`;
+  $("#mSteps").innerHTML=b.steps.map((s,n)=>`<li class="step"><div class="step-pic" style="background:${STEP_HUES[n%STEP_HUES.length]}">${s.e}</div><div><div class="step-num">Step ${n+1} of ${b.steps.length}</div><p>${s.t}</p></div></li>`).join("");
+  $("#mSafety").innerHTML=`<b>⚠️ Safety:</b> ${b.safety}`;
+  const done = JSON.parse(localStorage.getItem("wildcraft-done")||"[]");
+  $("#doneBtn").textContent = done.includes(i) ? "✅ Built! (tap to undo)" : "✅ Mark as built";
+  overlay.classList.add("show"); document.body.style.overflow="hidden";
+}
+function closeModal(){ overlay.classList.remove("show"); document.body.style.overflow=""; }
+$("#close").onclick=closeModal;
+overlay.addEventListener("click",e=>{if(e.target===overlay)closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+$("#doneBtn").onclick=()=>{
+  let done=JSON.parse(localStorage.getItem("wildcraft-done")||"[]");
+  done.includes(current)?done=done.filter(x=>x!==current):done.push(current);
+  localStorage.setItem("wildcraft-done",JSON.stringify(done)); openModal(current);
+};
+$("#printBtn").onclick=()=>window.print();
+/* checklist */
+function renderTodo(){
+  const saved=JSON.parse(localStorage.getItem("wildcraft-kit")||"[]");
+  $("#todo").innerHTML=KIT.map((k,i)=>`<label><input type="checkbox" data-i="${i}" ${saved.includes(i)?"checked":""}><span>${k}</span></label>`).join("");
+  const update=()=>{
+    const checked=[...document.querySelectorAll("#todo input:checked")].map(x=>+x.dataset.i);
+    localStorage.setItem("wildcraft-kit",JSON.stringify(checked));
+    $("#bar").style.width=(checked.length/KIT.length*100)+"%";
+    $("#pct").textContent=`${checked.length}/${KIT.length} gathered — ${checked.length===KIT.length?"ready for the wild! 🎉":"keep gathering!"}`;
+  };
+  document.querySelectorAll("#todo input").forEach(c=>c.onchange=update); update();
+}
+/* events */
+$("#q").oninput=e=>{state.q=e.target.value;renderGrid();};
+$("#cat").onchange=e=>{state.cat=e.target.value;renderGrid();};
+$("#diff").onchange=e=>{state.diff=e.target.value;renderGrid();};
+
+renderCatDiff(); renderChips(); renderHeroMats(); renderHave(); renderFinder(); renderMap(); renderTodo(); renderGrid();
+</script>
+</body>
+</html>
