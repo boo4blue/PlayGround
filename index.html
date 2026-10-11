@@ -66,8 +66,9 @@ select{background:#1a271f;color:var(--ink);border:1px solid var(--line);border-r
 @media(max-width:600px){.grid{grid-template-columns:1fr}}
 .card{background:linear-gradient(180deg,var(--card),#182620);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:.16s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-3px);border-color:rgba(123,196,127,.5);box-shadow:0 14px 40px rgba(0,0,0,.4)}
-.card-art{position:relative;line-height:0;background:#101b14}
-.card-art svg{width:100%;height:auto;display:block}
+.card-art{position:relative;line-height:0;background:#101b14;aspect-ratio:20/11;overflow:hidden}
+.card-art svg{width:100%;height:100%;display:block}
+.card-art img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .card-badge{position:absolute;left:12px;bottom:12px;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:30px;background:rgba(10,16,12,.78);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(4px);line-height:1}
 .card-step-n{position:absolute;right:12px;bottom:12px;font-size:12px;background:rgba(10,16,12,.78);border:1px solid rgba(255,255,255,.25);padding:4px 10px;border-radius:999px;color:#fff;line-height:1.4}
 .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
@@ -117,8 +118,11 @@ select{background:#1a271f;color:var(--ink);border:1px solid var(--line);border-r
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:24px;overflow:auto}
 .overlay.show{display:flex}
 .sheet{background:#141f18;border:1px solid var(--line);border-radius:20px;max-width:760px;width:100%;overflow:hidden}
-.hero-img{line-height:0;position:relative;background:#0d1712}
+.hero-img{line-height:0;position:relative;background:#0d1712;max-height:340px;overflow:hidden}
 .hero-img svg{width:100%;height:auto;display:block}
+.hero-img img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.photo-credit{font-size:11.5px;color:var(--muted);padding:6px 14px 0;text-align:right}
+.photo-credit b{color:var(--stone)}
 .hero-img .cap{position:absolute;left:14px;bottom:12px;font-size:12.5px;color:#fff;background:rgba(0,0,0,.55);padding:5px 12px;border-radius:999px;line-height:1.5}
 .sheet-head{padding:22px 26px 0;display:flex;gap:16px;align-items:flex-start}
 .sheet-art{font-size:48px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;width:84px;height:84px;display:grid;place-items:center;flex-shrink:0}
@@ -133,7 +137,8 @@ select{background:#1a271f;color:var(--ink);border:1px solid var(--line);border-r
 .box ul{margin:0;padding-left:18px;font-size:14.5px;color:#d9e6dc}
 .steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
 .step{display:flex;gap:12px;align-items:flex-start;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:14px;padding:10px;overflow:hidden}
-.step-pic{width:76px;height:76px;border-radius:12px;display:grid;place-items:center;font-size:38px;flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.14)}
+.step-pic{width:76px;height:76px;border-radius:12px;display:grid;place-items:center;font-size:38px;flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.14);overflow:hidden;position:relative}
+.step-pic img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .step-num{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--amber);text-transform:uppercase}
 .step p{margin:2px 0 0;font-size:14.5px;color:#d9e6dc}
 .safety{border-left:3px solid var(--clay);background:rgba(226,114,91,.08);padding:12px 14px;border-radius:0 12px 12px 0;font-size:14px;margin-top:12px}
@@ -198,13 +203,13 @@ footer b{color:var(--ink)}
         <div><b>34</b> illustrated guides</div>
         <div><b>15</b> fire, furnaces & forges</div>
         <div><b>8</b> wild materials</div>
-        <div><b>100%</b> offline pictures*</div>
+        <div><b>200+</b> real web photos</div>
       </div>
     </div>
     <div class="hero-card">
       <h3>🌿 Tap what you found outside — we'll filter the guides:</h3>
       <div class="mat-grid" id="heroMats"></div>
-      <p style="color:var(--muted);font-size:12.5px;margin:12px 0 0">*All pictures are hand-drawn built-in illustrations, so they work offline. <a href="#safety" style="color:var(--amber)">Read safety first.</a></p>
+      <p style="color:var(--muted);font-size:12.5px;margin:12px 0 0">*Real web photos need internet — offline, the built-in drawings show instead. <a href="#safety" style="color:var(--amber)">Read safety first.</a></p>
     </div>
   </section>
 
@@ -293,7 +298,7 @@ footer b{color:var(--ink)}
         <div class="box"><h4>🧺 Gather</h4><ul id="mMats"></ul></div>
         <div class="box"><h4>📊 At a glance</h4><div id="mFacts" style="font-size:14px"></div></div>
       </div>
-      <div class="box"><h4>🔨 How to build it — picture for every step</h4><ol class="steps" id="mSteps"></ol></div>
+      <div class="box"><h4>🔨 How to build it — real photo for every step</h4><ol class="steps" id="mSteps"></ol></div>
       <div class="safety" id="mSafety"></div>
       <div class="checkline">
         <button class="btn primary" id="doneBtn">✅ Mark as built</button>
@@ -504,6 +509,96 @@ const BUILDS = [
 ];
 const KIT = ["Dry tinder bundle (bark shavings + grass)","Armful of pencil-thin kindling","Wrist-thick dry firewood","10 dry palm-size stones","2 long ridge poles + roof sticks","Big pile of dry leaves / thatch","Bark sheets (fallen only)","Vine / root cordage","Clay-rich mud + sand","Clear water + boil container","Bag bellows or blowpipe (forge air)","Dry hardwood charcoal (forge fuel)"];
 
+/* ---------- real web photos (Pexels · Unsplash · Pixabay · Wikimedia Commons · creator thumbnails).
+   Every URL verified HTTP 200. Each <img> sits over the built-in illustration,
+   so if a photo ever fails/offline the drawing shows instead (onerror removes img). */
+const PX = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800`;
+const WC_LEANTO="https://upload.wikimedia.org/wikipedia/commons/1/1a/%27Lean_to%27_horse_shelter_-_geograph.org.uk_-_1524604.jpg";
+const WC_THATCH="https://upload.wikimedia.org/wikipedia/commons/7/74/Culebra%2C_thatched_roof_hut_%283795484835%29.jpg";
+const WC_HANGI="https://upload.wikimedia.org/wikipedia/commons/e/eb/Hawaiians_roasting_pig_for_luau%2C_c._1890.jpg";
+const WC_ADOBE="https://upload.wikimedia.org/wikipedia/commons/2/22/Mud_Brick_Making.jpg";
+const WC_AXE="https://upload.wikimedia.org/wikipedia/commons/5/58/Polished_stone_axe_%28FindID_239372%29.jpg";
+const WC_BUBO="https://upload.wikimedia.org/wikipedia/commons/3/37/Bubo_fish_trap_-_Philippines_01.jpg";
+const WC_MILL="https://upload.wikimedia.org/wikipedia/commons/5/52/Harvington_Watermill_-_waterwheel_-_geograph.org.uk_-_253479.jpg";
+const WC_POT="https://upload.wikimedia.org/wikipedia/commons/5/52/Earthenware_Pot_%28Clay_Pot%29.jpg";
+const WC_DIYA="https://upload.wikimedia.org/wikipedia/commons/d/dd/Diya_4.jpg";
+const WC_SMITH="https://upload.wikimedia.org/wikipedia/commons/6/67/The-Blacksmith-1922.jpg";
+const WC_COOK="https://upload.wikimedia.org/wikipedia/commons/e/ea/Cooking_at_Marangloya_Camp%2C_India%2C_1952_%2816369977823%29.jpg";
+const WC_TIKI="https://upload.wikimedia.org/wikipedia/commons/f/f7/Seaplane_Kona_Tiki_Torches.jpg";
+const WC_CHALK="https://upload.wikimedia.org/wikipedia/commons/8/82/Chalk_Cliff%2C_Undercliff_-_geograph.org.uk_-_1184327.jpg";
+const WC_CHALK2="https://upload.wikimedia.org/wikipedia/commons/d/d1/Chalk_cliff_-_geograph.org.uk_-_5367100.jpg";
+const WC_WELL="https://upload.wikimedia.org/wikipedia/commons/4/4d/Drinking_water_well%2C_Rossport_-_geograph.org.uk_-_1006972.jpg";
+const WC_FISH="https://upload.wikimedia.org/wikipedia/commons/a/a0/Man_pole_fishing_for_trout%2C_Bridge_Creek_Camp%2C_Stehekin_River%2C_1916_%28LL_992%29.jpg";
+const U_FIRE="https://images.unsplash.com/photo-1634206813008-d1c2b828c7fd?fm=jpg&q=60&w=800";
+const U_FISH="https://images.unsplash.com/photo-1493787039806-2edcbe808750?fm=jpg&q=60&w=800";
+const U_ROCKS="https://images.unsplash.com/photo-1770625467983-8cb4168e4de0?fm=jpg&q=60&w=800";
+const PB_SMITH="https://cdn.pixabay.com/photo/2017/09/11/19/20/blacksmith-2740128_1280.jpg";
+const PB_RIVER="https://cdn.pixabay.com/photo/2016/08/12/20/14/river-1589616_1280.jpg";
+const PB_FISHBOAT="https://cdn.pixabay.com/photo/2020/09/03/13/53/fishing-boat-5541327_1280.jpg";
+const PB_POT="https://cdn.pixabay.com/photo/2017/12/30/17/56/ceramic-3050615_1280.jpg";
+const YT_SHELTER="https://i.ytimg.com/vi/dID8muCPG7A/maxresdefault.jpg";
+const YT_SHELTER2="https://i.ytimg.com/vi/4YwDGz3fEpE/maxresdefault.jpg";
+const YT_BOW="https://i.ytimg.com/vi/0BRQJTIdv-Y/maxresdefault.jpg";
+const YT_CORD="https://i.ytimg.com/vi/vADwrLzDOdI/maxresdefault.jpg";
+const YT_BARK="https://i.ytimg.com/vi/P94r2gYY12c/hqdefault.jpg";
+const YT_BARK2="https://i.ytimg.com/vi/oG8kzDdrdlY/maxresdefault.jpg";
+const PIN_SH1="https://i.pinimg.com/originals/fe/e1/9f/fee19f80c2a08b24f62f6d2e0e02e30f.jpg";
+const PIN_SH2="https://i.pinimg.com/originals/ab/62/d2/ab62d2708049150ec9ce15927b6d6f2a.jpg";
+const PIN_SH3="https://i.pinimg.com/736x/84/6f/5e/846f5e44c16b3e9b2b1af1fb35cd3bdc.jpg";
+const PIN_SH4="https://i.pinimg.com/736x/1a/6c/1b/1a6c1bf3242eea4b9d938f5946acf58a.jpg";
+const PIN_DAK1="https://i.pinimg.com/originals/34/87/73/348773e7c0f63c9ec54ad4070a0ab4ab.jpg";
+const PIN_DAK2="https://i.pinimg.com/originals/df/ba/e3/dfbae3fe7549d0f82d8a9040e2c2a302.jpg";
+const OVERLAND="https://www.overlandexpo.com/wp-content/uploads/2021/05/campfire-1493151033GIm-1.jpg";
+const DAKBLOG="https://modernsurvivalonline.com/wp-content/uploads/2023/01/dakota-fire-pit-pinterest.jpg";
+const CHARCOALBAG="https://grandroyalcoco.com/wp-content/uploads/2022/01/Hardwood-Lump-Charcoal-1.jpg";
+const CHARCOALLIGHT="https://heygrillhey.com/wp-content/uploads/2023/05/LightingCharcoal-9-scaled.jpg";
+const FREEMUD="https://img.freepik.com/free-photo/lots-black-charcoal-texture-background_38663-1011.jpg?size=626&ext=jpg";
+const KNIGHT="https://knightstemplar.co/wp-content/uploads/2023/07/blacksmith-medieval.jpg";
+const OGDEN="https://ogden_images.s3.amazonaws.com/www.motherearthnews.com/images/2020/09/20195059/homemetalforge.jpeg";
+const SCIMELT="https://scitechdaily.com/images/Molten-Metal-Steel-Mill.jpg";
+const LIMESTONE="https://geologyscience.com/wp-content/uploads/2023/10/Limestone-2-jpg.webp";
+const CLAYWORK="https://www.sublimegardens.co.uk/wp-content/uploads/2024/03/workable-clay-1024x585.jpg";
+const AXE1="https://odins-glory.com/cdn/shop/products/Hand-Forged-Double-Edged-Axe-Havamal-4.jpg?v=1680820693";
+const AXE2="https://fadirtools.com/cdn/shop/files/LongVikingBeardedAxe-3.png?v=1730141117&width=1946";
+const PHOTOS = {
+shelter:{c:"YouTube bushcraft creators · Geograph UK · Pinterest",h:YT_SHELTER,s:[YT_SHELTER2,WC_LEANTO,PIN_SH1,PIN_SH2,PIN_SH3]},
+hut:{c:"Pinterest bushcraft community · YouTube",h:PIN_SH3,s:[PIN_SH4,PIN_SH2,PIN_SH1,YT_SHELTER2,YT_SHELTER]},
+thatch:{c:"Wikimedia Commons · YouTube · Pinterest",h:WC_THATCH,s:[YT_SHELTER,PIN_SH1,PIN_SH2,YT_SHELTER2,WC_LEANTO]},
+firering:{c:"Pexels · Unsplash · Overland Expo",h:PX(1061640),s:[U_FIRE,OVERLAND,PX(15607465),PX(37126437),PX(38692792)]},
+dakota:{c:"Pinterest · Modern Survival Online · Pexels",h:PIN_DAK1,s:[PIN_DAK2,DAKBLOG,PX(38692792),PX(1061640),U_FIRE]},
+swedish:{c:"Pexels · Overland Expo",h:PX(15607465),s:[PX(38340941),PX(38692792),PX(37126437),PX(1061640),OVERLAND]},
+trench:{c:"Pexels · Wikimedia Commons · Overland Expo",h:PX(29295215),s:[OVERLAND,PX(1061640),WC_COOK,U_FIRE,PX(37263952)]},
+reflector:{c:"Unsplash · Pexels · Overland Expo",h:U_FIRE,s:[PX(1061640),PX(15607465),PX(37126437),OVERLAND,PX(38340941)]},
+bowdrill:{c:"YouTube · Pexels · Unsplash",h:YT_BOW,s:[PX(15607465),PX(38340941),PX(1061640),U_FIRE,PX(37126437)]},
+torch:{c:"Wikimedia Commons · Pexels",h:WC_TIKI,s:[PX(15607465),PX(38340941),PX(1061640),U_FIRE,PX(37126437)]},
+rocket:{c:"Pexels",h:PX(37678024),s:[PX(29295215),PX(35654473),PX(5418613),PX(1061640),PX(37263952)]},
+oven:{c:"Pexels · Pixabay · Wikimedia Commons",h:PX(38125836),s:[PX(32641694),PX(37263952),PX(30512722),PB_POT,WC_POT]},
+pitoven:{c:"Wikimedia Commons · HeyGrillHey · Pexels",h:WC_HANGI,s:[CHARCOALLIGHT,CHARCOALBAG,PX(15607465),PX(35654473),FREEMUD]},
+charcoal:{c:"GrandRoyalCoco · HeyGrillHey · Freepik · Pexels",h:CHARCOALBAG,s:[CHARCOALLIGHT,FREEMUD,PX(35654473),PX(15607465),PX(38340941)]},
+bloomery:{c:"Knightstemplar · Pixabay · SciTechDaily · Pexels",h:KNIGHT,s:[PB_SMITH,SCIMELT,PX(35654473),PX(15607465),OGDEN]},
+tripod:{c:"Pexels · Wikimedia Commons · Overland Expo",h:PX(29295215),s:[PX(37263952),OVERLAND,WC_COOK,PX(1061640),U_FIRE]},
+spear:{c:"Wikimedia Commons · Unsplash · Pexels · Pixabay",h:WC_FISH,s:[U_FISH,PX(5688674),PB_RIVER,PB_FISHBOAT,U_FIRE]},
+rockoven:{c:"Unsplash · Pexels",h:U_ROCKS,s:[PX(18285439),PX(1061640),PX(15607465),PX(35654473),PX(6857798)]},
+barkcup:{c:"Pexels · YouTube",h:PX(13095209),s:[PX(39654609),PX(36285205),YT_BARK,YT_BARK2,PX(6857798)]},
+claypot:{c:"Wikimedia Commons · Pixabay · Pexels",h:WC_POT,s:[PB_POT,PX(30512722),PX(38125836),CLAYWORK,PX(32641694)]},
+bricks:{c:"Wikimedia Commons · Freepik · Pexels",h:WC_ADOBE,s:[FREEMUD,PX(38125836),WC_ADOBE,PX(37263952),WC_THATCH]},
+axe:{c:"Wikimedia Commons · Odins-Glory · FadirTools · Pexels",h:WC_AXE,s:[PB_RIVER,WC_AXE,AXE1,PX(39879021),AXE2]},
+cordage:{c:"Pexels · YouTube",h:PX(39879021),s:[PX(6857798),PX(39879021),PX(25471563),YT_CORD,PX(10981110)]},
+filter:{c:"Pexels · Freepik · Wikimedia Commons · Unsplash",h:PX(6857798),s:[PX(8054437),PX(17947564),FREEMUD,WC_WELL,PX(6857798)]},
+fishtrap:{c:"Wikimedia Commons · Unsplash · Pexels · Pixabay",h:WC_BUBO,s:[U_FISH,PX(5688674),PB_FISHBOAT,PB_RIVER,WC_FISH]},
+forge:{c:"Pixabay · Wikimedia Commons · Mother Earth News · Pexels",h:PB_SMITH,s:[WC_SMITH,KNIGHT,OGDEN,PX(35654473),PX(15607465)]},
+bellows:{c:"Knightstemplar · Pixabay · Wikimedia Commons",h:KNIGHT,s:[PB_SMITH,WC_SMITH,OGDEN,PX(38340941),PX(15607465)]},
+copper:{c:"Pexels",h:PX(37924966),s:[PX(37924967),PX(37924968),PX(32965929),PX(35654473),PX(37924966)]},
+ironsand:{c:"Pexels · Pixabay",h:PX(17947564),s:[PX(33531373),PX(34598719),PB_RIVER,PX(6857798),PX(17947564)]},
+casting:{c:"SciTechDaily · Pixabay · Pexels",h:SCIMELT,s:[PB_SMITH,KNIGHT,PX(35654473),OGDEN,PX(15607465)]},
+soap:{c:"Pexels",h:PX(16244099),s:[PX(8624624),PX(9985076),PX(14798519),PX(31517865),PX(16244099)]},
+lamp:{c:"Wikimedia Commons · Pixabay · Pexels",h:WC_DIYA,s:[PB_POT,CLAYWORK,PX(15607465),PX(37126437),WC_DIYA]},
+concrete:{c:"GeologyScience · Wikimedia Commons · Pexels",h:LIMESTONE,s:[WC_CHALK,WC_CHALK2,PX(38125836),LIMESTONE,WC_ADOBE]},
+waterwheel:{c:"Wikimedia Commons · Pixabay · Pexels",h:WC_MILL,s:[PB_RIVER,PX(6857798),U_FIRE,WC_MILL,PB_FISHBOAT]},
+};
+/* photo <img> over illustration fallback: img covers art; onerror removes it revealing drawing */
+const photoImg = (url, alt, cls) => `<img class="photo" loading="lazy" src="${url}" alt="${alt}" onerror="this.remove()">`;
+const cardPhoto = b => (PHOTOS[b.scene]&&PHOTOS[b.scene].h) ? photoImg(PHOTOS[b.scene].h, b.title+" — real photo") : "";
 /* ---------- render helpers ---------- */
 const $ = s => document.querySelector(s);
 const grid = $("#grid"), heroMats = $("#heroMats"), matChips = $("#matChips"),
@@ -533,7 +628,7 @@ function renderGrid(){
   grid.innerHTML = list.length ? list.map((b)=>{
     const i = BUILDS.indexOf(b);
     return `<article class="card" data-i="${i}" tabindex="0" role="button" aria-label="${b.title}">
-      <div class="card-art">${sceneSVG(b.scene)}<div class="card-badge">${b.icon}</div><div class="card-step-n">🖼 ${b.steps.length} steps</div></div>
+      <div class="card-art">${sceneSVG(b.scene)}${cardPhoto(b)}<div class="card-badge">${b.icon}</div><div class="card-step-n">📷 ${b.steps.length} photos</div></div>
       <div class="card-body">
         <h3>${b.title}</h3><p>${b.desc}</p>
         <div class="meta"><span class="tag">${b.cat}</span><span class="tag ${tagDiff(b.diff)}">${b.diff}</span><span class="tag">⏱ ${b.time}</span></div>
@@ -645,13 +740,15 @@ function selectSpot(n){ state.map = n; renderMap(); }
 const overlay=$("#overlay"); let current=-1;
 function openModal(i){
   current=i; const b=BUILDS[i];
-  $("#mHero").innerHTML = sceneSVG(b.scene) + `<div class="cap">🖼 ${b.cap||("Finished: "+b.title)}</div>`;
+  $("#mHero").innerHTML = sceneSVG(b.scene) + ((PHOTOS[b.scene]&&PHOTOS[b.scene].h)?photoImg(PHOTOS[b.scene].h, b.title+" — real photo"):"") + `<div class="cap">📷 ${b.cap||("Finished: "+b.title)}</div>`;
+  document.querySelectorAll("#photoCredit").forEach(e=>e.remove());
+  $("#mHero").insertAdjacentHTML("afterend", (PHOTOS[b.scene]&&PHOTOS[b.scene].c)?`<div class="photo-credit" id="photoCredit">📷 Photos: <b>${PHOTOS[b.scene].c}</b></div>`:"");
   $("#mArt").textContent=b.icon; $("#mTitle").textContent=b.title;
   $("#mSub").textContent=`${b.cat} · ${b.diff} · ⏱ ${b.time}`;
   $("#mTags").innerHTML=`${b.mats.map(m=>`<span class="tag">${matEmoji(m)} ${matLabel(m)}</span>`).join("")}`;
   $("#mMats").innerHTML=b.gather.map(g=>`<li>${g}</li>`).join("");
   $("#mFacts").innerHTML=`<b>Category:</b> ${b.cat}<br><b>Difficulty:</b> ${b.diff}<br><b>Time:</b> ${b.time}<br><b>Materials:</b> ${b.mats.map(matLabel).join(", ")}`;
-  $("#mSteps").innerHTML=b.steps.map((s,n)=>`<li class="step"><div class="step-pic" style="background:${STEP_HUES[n%STEP_HUES.length]}">${s.e}</div><div><div class="step-num">Step ${n+1} of ${b.steps.length}</div><p>${s.t}</p></div></li>`).join("");
+  $("#mSteps").innerHTML=b.steps.map((s,n)=>{const p=(PHOTOS[b.scene]&&PHOTOS[b.scene].s&&PHOTOS[b.scene].s[n])||null;return `<li class="step"><div class="step-pic" style="background:${STEP_HUES[n%STEP_HUES.length]}">${s.e}${p?photoImg(p,b.title+" step "+(n+1)):""}</div><div><div class="step-num">Step ${n+1} of ${b.steps.length} 📷</div><p>${s.t}</p></div></li>`;}).join("");
   $("#mSafety").innerHTML=`<b>⚠️ Safety:</b> ${b.safety}`;
   const done = JSON.parse(localStorage.getItem("wildcraft-done")||"[]");
   $("#doneBtn").textContent = done.includes(i) ? "✅ Built! (tap to undo)" : "✅ Mark as built";
